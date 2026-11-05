@@ -1,0 +1,612 @@
+{
+  "manifest_version": 1,
+  "embedding_version": "gte-small-384-v1",
+  "documents": [
+    {
+      "document": {
+        "slug": "css-box-model",
+        "title": "The CSS box model",
+        "language": "html_css",
+        "section": "CSS basics",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "ad13286027ac5058f71927fb353ad2a4c730e766cf0cbcd39dfdc0aa33b4e410"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Content, padding, border, margin",
+          "content": "Every element is a box. From the inside out it has content, padding (space inside the border), a border, and margin (space outside the border that pushes other boxes away).\n\n```css\n.card {\n  width: 200px;\n  padding: 16px;\n  border: 1px solid #ccc;\n  margin: 24px;\n}\n```",
+          "token_count": 60
+        },
+        {
+          "index": 1,
+          "heading": "box-sizing",
+          "content": "By default, `width` sets only the content width, so the card above is actually 234px wide (200 + 2×16 padding + 2×1 border). With `box-sizing: border-box`, `width` includes padding and border, which makes sizes easier to predict. Many stylesheets apply it to every element: `*, *::before, *::after { box-sizing: border-box; }`.",
+          "token_count": 68
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "css-flexbox-grid",
+        "title": "Flexbox and grid layouts",
+        "language": "html_css",
+        "section": "CSS layout",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "06aef9b236d59aaa110dae50fade1e7034065096b0a9b195b2146f56c2da8898"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Flexbox: one direction",
+          "content": "Flexbox lays items out in a single row or column. Set `display: flex` on the parent; the children become flex items.\n\n```css\n.navbar {\n  display: flex;\n  justify-content: space-between;  /* along the main axis (the row) */\n  align-items: center;             /* across it (vertically in a row) */\n  gap: 16px;\n}\n```\n\n`justify-content` aligns items along the main axis, which is horizontal for `flex-direction: row`. `align-items` aligns them on the cross axis. Swapping the two is one of the most common flexbox mix-ups.",
+          "token_count": 108
+        },
+        {
+          "index": 1,
+          "heading": "Grid: two directions",
+          "content": "CSS grid places items in rows and columns at the same time, which suits page layouts and card galleries.\n\n```css\n.cards {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);  /* three equal columns */\n  gap: 16px;\n}\n```\n\nA navbar is usually a flexbox job (one row of links); a gallery of cards is usually a grid job.",
+          "token_count": 75
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "general-debugging",
+        "title": "A beginner's debugging routine",
+        "language": "general",
+        "section": "Debugging",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "86974d65e83d4449097865d8c77ff7cd6825a5ce326f3f9e2fa5a3f4bb21ae36"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Reproduce, read, locate",
+          "content": "Debugging starts with making the problem happen reliably. Then read the whole error message: the error type and message say what went wrong, and the file and line number say where it was noticed. Go to that line before changing anything.",
+          "token_count": 55
+        },
+        {
+          "index": 1,
+          "heading": "Check your assumptions",
+          "content": "Most bugs are a difference between what you think a value is and what it really is. Print or log the values just before the failing line, check their types, and test with the smallest input that still fails. Change one thing at a time so you know which change fixed it.",
+          "token_count": 70
+        },
+        {
+          "index": 2,
+          "heading": "Off-by-one and other classics",
+          "content": "Loops that run one step too many or too few, comparing with `=` instead of `==`, forgetting to return a value, and misspelled names cause a large share of beginner errors. When a loop fails on its last step, compare the highest index it uses with the length minus one.",
+          "token_count": 67
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "html-structure",
+        "title": "HTML elements, attributes and structure",
+        "language": "html_css",
+        "section": "HTML",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "cd9d8b0e6ebae9c240e38201ee5f7976fd07798ef94f170292bfe1b16c5471ab"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Elements and tags",
+          "content": "HTML describes the structure of a page with elements. Most elements have an opening tag, content and a closing tag; attributes inside the opening tag add extra information.\n\n```html\n<a href=\"https://example.com\" target=\"_blank\">Visit</a>\n<img src=\"cat.png\" alt=\"A sleeping cat\">\n```\n\n`<img>` has no closing tag. The `alt` text describes an image for people using screen readers and is shown if the image fails to load.",
+          "token_count": 84
+        },
+        {
+          "index": 1,
+          "heading": "Semantic structure",
+          "content": "Semantic elements say what content is, which helps accessibility and search engines: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`. Use headings `<h1>`–`<h6>` in order without skipping levels, `<button>` for actions and `<a>` for navigation. A page usually has one `<h1>`.",
+          "token_count": 52
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "js-arrays-loops",
+        "title": "Arrays and loops in JavaScript",
+        "language": "javascript",
+        "section": "Arrays",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "3b83aca653c1babe1f64d93fa761e3cb9a241c864e235d4b987f9ec17790759f"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Arrays and indexes",
+          "content": "An array is an ordered list of values. Indexes start at 0, and `length` gives the number of items, so the last index is `length - 1`.\n\n```javascript\nconst scores = [72, 88, 95];\nconsole.log(scores[0]);       // 72\nconsole.log(scores.length);   // 3\nconsole.log(scores[3]);       // undefined (no error in JavaScript)\n```\n\nUnlike Python, reading past the end of an array does not throw an error — it gives `undefined`, which can silently turn a sum into `NaN`.",
+          "token_count": 99
+        },
+        {
+          "index": 1,
+          "heading": "Ways to loop",
+          "content": "A classic `for` loop uses an index; `for...of` visits each value directly; `forEach` and `map` take a function.\n\n```javascript\nfor (let i = 0; i < scores.length; i++) { console.log(scores[i]); }\nfor (const s of scores) { console.log(s); }\nconst doubled = scores.map((s) => s * 2);   // [144, 176, 190]\n```\n\nUsing `i <= scores.length` instead of `<` runs one step too far and reads `undefined`.",
+          "token_count": 90
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "js-equality-and-errors",
+        "title": "Equality, truthiness and common errors in JavaScript",
+        "language": "javascript",
+        "section": "Errors",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "57633b5c9b53e2a0853b3372270e0c84adcb273971d12fb958d786681867991d"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "== versus ===",
+          "content": "`===` (strict equality) compares value and type without converting anything. `==` converts types first, which leads to surprises such as `0 == \"\"` being `true`. Use `===` and `!==` by default.\n\n```javascript\nconsole.log(5 === \"5\");   // false\nconsole.log(5 == \"5\");    // true (the string is converted)\n```\n\nFalsy values are `false`, `0`, `\"\"`, `null`, `undefined` and `NaN`; everything else is truthy in an `if`.",
+          "token_count": 86
+        },
+        {
+          "index": 1,
+          "heading": "Reading a TypeError and a ReferenceError",
+          "content": "A `TypeError` means a value was used in a way its type does not allow, for example calling something that is not a function, reading a property of `undefined` (`Cannot read properties of undefined`), or reassigning a `const`. A `ReferenceError` such as `x is not defined` means the name does not exist in that scope — often a typo or a variable declared inside another block.\n\nThe browser console shows the message plus the file and line number. Start from the first error in the console, go to that line, and log the values involved with `console.log` before changing anything.",
+          "token_count": 133
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "js-functions",
+        "title": "Functions in JavaScript",
+        "language": "javascript",
+        "section": "Functions",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "fc4698e096c9b33fe687af8eb20bf0f7cb1ec70f7cea4d8a3062b8eacbb19067"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Function declarations and calls",
+          "content": "A function is a reusable block of code. You define it once and call it with parentheses, passing arguments that fill its parameters.\n\n```javascript\nfunction add(a, b) {\n  return a + b;\n}\nconsole.log(add(2, 3));   // 5\n```\n\n`return` sends a value back to the caller and ends the function. A function without `return` gives back `undefined`.",
+          "token_count": 76
+        },
+        {
+          "index": 1,
+          "heading": "Arrow functions",
+          "content": "Arrow functions are a shorter syntax that is common for small functions and callbacks. With a single expression and no braces, the value is returned automatically.\n\n```javascript\nconst double = (x) => x * 2;\nconst greet = (name) => {\n  return `Hello, ${name}`;\n};\n```\n\nIf you add braces to an arrow function you must write `return` yourself; forgetting it is a common reason a function returns `undefined`.",
+          "token_count": 92
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "js-let-const-var",
+        "title": "Declaring variables with let and const",
+        "language": "javascript",
+        "section": "Variables",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "3c5c0827afb249b1bc59ce2fd01691e7d5688ea8451127decb1de6fc2c30ae28"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "let and const",
+          "content": "Both `let` and `const` create a variable — a name that refers to a value. The difference is reassignment: a `let` variable can be pointed at a new value later, a `const` variable cannot.\n\n```javascript\nconst name = \"Sara\";\nlet score = 0;\nscore = score + 10;   // fine: let can be reassigned\nname = \"Ali\";         // TypeError: Assignment to constant variable.\n```\n\nA good default is to use `const`, and switch to `let` only when the name really needs a new value, such as a counter.",
+          "token_count": 118
+        },
+        {
+          "index": 1,
+          "heading": "const does not freeze the value",
+          "content": "`const` stops the name from being reassigned, but it does not make objects or arrays read-only. A `const` array can still grow:\n\n```javascript\nconst items = [1, 2];\nitems.push(3);        // allowed: same array, new content\nitems = [4];          // TypeError: the name cannot point at a new array\n```",
+          "token_count": 66
+        },
+        {
+          "index": 2,
+          "heading": "What about var?",
+          "content": "`var` is the older way to declare variables. It is function-scoped instead of block-scoped, so a `var` declared inside an `if` or loop block is visible outside it, and it can be declared twice without an error. Modern code uses `let` and `const` because their block scope makes mistakes easier to spot. Both `let` and `const` must be declared before use; reading them earlier throws a `ReferenceError`.",
+          "token_count": 90
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-conditions",
+        "title": "if, elif, else and boolean logic in Python",
+        "language": "python",
+        "section": "Control flow",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "4feb10221ef49d4975a46a260ace359af64f43a3a5bf43a4bbfa1ad88a937c08"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Making decisions with if",
+          "content": "An `if` statement runs its indented block only when its condition is true. `elif` checks another condition when the earlier ones were false, and `else` runs when none of them were true.\n\n```python\ntemperature = 30\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"mild\")\nelse:\n    print(\"cold\")\n```\n\nComparison operators are `==` (equal), `!=` (not equal), `<`, `>`, `<=` and `>=`. A single `=` assigns and is a syntax error inside an `if` condition.",
+          "token_count": 100
+        },
+        {
+          "index": 1,
+          "heading": "The \"or\" trap",
+          "content": "`letter == \"a\" or \"e\"` does not compare `letter` with both strings. Python reads it as `(letter == \"a\") or \"e\"`. A non-empty string such as `\"e\"` counts as true, so the whole condition is always true. Write each comparison in full, or check membership instead:\n\n```python\nif letter == \"a\" or letter == \"e\":\n    ...\nif letter in \"aeiou\":   # shorter: is letter one of these characters?\n    ...\n```",
+          "token_count": 94
+        },
+        {
+          "index": 2,
+          "heading": "Truthy and falsy values",
+          "content": "Python treats some values as false in conditions: `False`, `0`, `0.0`, `\"\"` (empty string), `[]` (empty list), `{}` (empty dict) and `None`. Everything else counts as true. That is why `if items:` is a common way to check that a list is not empty.",
+          "token_count": 59
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-dictionaries",
+        "title": "Dictionaries in Python",
+        "language": "python",
+        "section": "Dictionaries",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "13266f9148b62d6c5ff3bc1072df42fc15782c65833e600296424908f3176c08"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Keys and values",
+          "content": "A dictionary stores pairs of keys and values. You look a value up by its key instead of by a position.\n\n```python\nages = {\"Sara\": 15, \"Ali\": 17}\nprint(ages[\"Sara\"])   # 15\nages[\"Omar\"] = 16     # add a new pair\n```\n\nKeys must be unique and are usually strings or numbers. Asking for a key that does not exist raises `KeyError`. `ages.get(\"Zara\")` returns `None` instead of raising an error, and `ages.get(\"Zara\", 0)` returns the default `0`.",
+          "token_count": 100
+        },
+        {
+          "index": 1,
+          "heading": "Looping over a dictionary",
+          "content": "Looping over a dictionary directly gives its keys. `.items()` gives each key and value together, which you can unpack into two variables.\n\n```python\nfor name, age in ages.items():\n    print(name, \"is\", age)\n```\n\n`.keys()` returns the keys and `.values()` returns the values. Use `\"Sara\" in ages` to check whether a key exists before reading it.",
+          "token_count": 72
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-reading-errors",
+        "title": "Reading Python error messages",
+        "language": "python",
+        "section": "Errors",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "70b2c68c1ed2dfe55f2854eb618a68e3d533aca7c68a8b7ca89d1e7952327a2b"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "How to read a traceback",
+          "content": "When Python stops with an error it prints a traceback. Read it from the bottom: the last line names the error type and a short message, and the lines just above it show the file and line number where it happened.\n\n```text\nTraceback (most recent call last):\n  File \"average.py\", line 4, in <module>\n    total += scores[i]\nIndexError: list index out of range\n```\n\nHere the problem is on line 4, and the type is `IndexError`. The traceback tells you where Python noticed the problem, which is not always where the mistake was made.",
+          "token_count": 124
+        },
+        {
+          "index": 1,
+          "heading": "Common error types",
+          "content": "- `NameError`: a name was used before it was assigned, or it is misspelled.\n- `TypeError`: a value was used in a way its type does not allow, such as `\"3\" + 4`.\n- `IndexError`: a list position that does not exist.\n- `KeyError`: a dictionary key that does not exist.\n- `IndentationError` / `SyntaxError`: the code is not valid Python, often a missing colon or inconsistent spaces.\n- `ZeroDivisionError`: dividing by zero.",
+          "token_count": 98
+        },
+        {
+          "index": 2,
+          "heading": "A simple debugging routine",
+          "content": "Reproduce the error, read the last line, go to the line number, and print the values involved just before that line (for example `print(i, len(scores))`). Change one thing at a time and run again. Checking the exact input that fails is usually faster than rewriting the whole program.",
+          "token_count": 64
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-functions",
+        "title": "Functions, parameters and return in Python",
+        "language": "python",
+        "section": "Functions",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "230c3ba4ea2fe1adf15d14c7554f2671a1b1cbef3e584eb79783311266fb1cae"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Defining and calling a function",
+          "content": "A function is a named block of code you can run many times. `def` defines it; calling it with parentheses runs it.\n\n```python\ndef greet(name):\n    return \"Hello, \" + name\n\nmessage = greet(\"Ali\")\nprint(message)   # Hello, Ali\n```\n\n`name` is a parameter: a variable that receives the value passed in the call (the argument, here `\"Ali\"`).",
+          "token_count": 75
+        },
+        {
+          "index": 1,
+          "heading": "return versus print",
+          "content": "`return` sends a value back to the code that called the function, so it can be stored or used in a calculation. `print` only shows text on the screen. A function without a `return` statement returns `None`.\n\n```python\ndef double(x):\n    print(x * 2)\n\nresult = double(4)   # shows 8\nprint(result)        # None — nothing was returned\n```\n\nIf you need the value later, use `return`. Code after a `return` inside the same block does not run.",
+          "token_count": 102
+        },
+        {
+          "index": 2,
+          "heading": "Common function errors",
+          "content": "Calling a function with the wrong number of arguments raises a `TypeError`, for example `greet()` gives `TypeError: greet() missing 1 required positional argument: 'name'`. Forgetting the parentheses (`greet` instead of `greet(\"Ali\")`) does not call the function at all; it just refers to it.",
+          "token_count": 58
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-lists",
+        "title": "Lists and indexes in Python",
+        "language": "python",
+        "section": "Lists",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "b2c7a2f9d9bbdf3395fa1c34add8b399a6ce15a83256b116336f84b870fc6808"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Creating and reading a list",
+          "content": "A list is an ordered collection of values written in square brackets. Each item has a position called an index, and indexes start at 0.\n\n```python\nfruits = [\"apple\", \"pear\", \"fig\"]\nprint(fruits[0])    # apple\nprint(fruits[2])    # fig\nprint(len(fruits))  # 3\n```\n\nA list of 3 items has indexes 0, 1 and 2. The last valid index is always `len(fruits) - 1`. Negative indexes count from the end: `fruits[-1]` is the last item.",
+          "token_count": 96
+        },
+        {
+          "index": 1,
+          "heading": "Changing a list",
+          "content": "Lists are mutable, which means you can change them after creating them. `append` adds one item to the end; assigning to an index replaces an item.\n\n```python\nfruits.append(\"kiwi\")   # ['apple', 'pear', 'fig', 'kiwi']\nfruits[1] = \"plum\"      # ['apple', 'plum', 'fig', 'kiwi']\n```\n\n`append` changes the list in place and returns `None`, so `fruits = fruits.append(\"kiwi\")` is a common mistake: it replaces your list with `None`.",
+          "token_count": 87
+        },
+        {
+          "index": 2,
+          "heading": "IndexError: list index out of range",
+          "content": "Asking for a position that does not exist raises `IndexError: list index out of range`. With `scores = [72, 88, 95]`, `scores[3]` fails because the last index is 2. This often comes from loops that run one step too far, for example `range(len(scores) + 1)`. Check which index the failing line uses and compare it with `len(...) - 1`.",
+          "token_count": 79
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-for-loops",
+        "title": "for loops and range in Python",
+        "language": "python",
+        "section": "Control flow",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "d7bd6160c3aa5d79e9accc314d481cbe416b76edd6ee04c3b517ec48c56d8eec"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Looping over a collection",
+          "content": "A `for` loop repeats a block of code once for each item in a collection. The loop variable takes each value in turn.\n\n```python\nfor fruit in [\"apple\", \"pear\", \"fig\"]:\n    print(fruit)\n```\n\nThe indented lines under the `for` line form the loop body. Python uses indentation (usually 4 spaces) instead of braces, so a missing or inconsistent indent causes an `IndentationError`.",
+          "token_count": 82
+        },
+        {
+          "index": 1,
+          "heading": "range and counting",
+          "content": "`range(n)` produces the numbers 0, 1, … n − 1 — it stops before `n`. `range(start, stop)` starts at `start` and still stops before `stop`.\n\n```python\nfor i in range(3):\n    print(i)        # 0, 1, 2\n```\n\nTo loop over list positions use `range(len(items))`, which gives exactly the valid indexes. Adding 1, as in `range(len(items) + 1)`, produces one index too many and causes an `IndexError`. When you only need the items, loop over the list directly instead of using indexes.",
+          "token_count": 107
+        },
+        {
+          "index": 2,
+          "heading": "Looping over a string and counting",
+          "content": "A string is a sequence of characters, so a `for` loop visits each character one at a time. A counter variable that starts at 0 and grows inside the loop is a common pattern.\n\n```python\nword = \"banana\"\ncount = 0\nfor letter in word:\n    if letter in \"aeiou\":\n        count += 1\nprint(count)   # expected output: 3\n```\n\n`count += 1` is a short way of writing `count = count + 1`.",
+          "token_count": 96
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-strings",
+        "title": "Strings and f-strings in Python",
+        "language": "python",
+        "section": "Strings",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "a945ffaa3d3d709ab7814ff3be4c0a562522a2cc5c8956a7c8a95b9c38172bff"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Working with text",
+          "content": "A string is text inside quotes. Single and double quotes work the same way. Strings can be joined with `+` and repeated with `*`, and `len()` gives the number of characters.\n\n```python\nfirst = \"Code\"\nsecond = \"Bloom\"\nprint(first + second)   # CodeBloom\nprint(len(first))       # 4\n```\n\nYou cannot add a string and a number directly: `\"Age: \" + 15` raises `TypeError: can only concatenate str (not \"int\") to str`. Convert the number with `str(15)`, or use an f-string.",
+          "token_count": 106
+        },
+        {
+          "index": 1,
+          "heading": "f-strings",
+          "content": "An f-string starts with `f` before the quote and can include values inside curly braces.\n\n```python\nname = \"Sara\"\nage = 15\nprint(f\"{name} is {age} years old\")   # Sara is 15 years old\n```",
+          "token_count": 46
+        },
+        {
+          "index": 2,
+          "heading": "Strings cannot be changed in place",
+          "content": "Strings are immutable: methods such as `.upper()` or `.replace()` return a new string and leave the original unchanged. Store the result if you need it: `name = name.upper()`.",
+          "token_count": 38
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "python-variables",
+        "title": "Variables and assignment in Python",
+        "language": "python",
+        "section": "Variables",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "4a3e19d7a23ced9d8670505a62103c0afa3438d6ab6937ffe5e2b1d3b9a3adc1"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "What a variable is",
+          "content": "A variable is a name that refers to a value. You create one with the assignment operator `=`: the name goes on the left and the value on the right.\n\n```python\nage = 15\nname = \"Sara\"\n```\n\nPython reads `age = 15` as \"make the name `age` refer to the value 15\". The `=` sign does not mean \"is equal to\" like in maths — it means \"store\". Comparing values uses `==` instead.",
+          "token_count": 99
+        },
+        {
+          "index": 1,
+          "heading": "Reassigning a variable",
+          "content": "You can point an existing name at a new value at any time. The old value is simply forgotten by that name.\n\n```python\nscore = 0\nscore = score + 10   # score now refers to 10\n```\n\nThe right-hand side is worked out first (`0 + 10`), then the result is stored back in `score`. Python variables have no fixed type: the same name can refer to a number now and a string later, although doing that usually makes code harder to read.",
+          "token_count": 112
+        },
+        {
+          "index": 2,
+          "heading": "Naming rules and conventions",
+          "content": "Names can contain letters, digits and underscores, but cannot start with a digit and cannot be a keyword such as `for` or `if`. Names are case-sensitive, so `Total` and `total` are different. Python style (PEP 8) uses lowercase words joined by underscores, like `total_score`. Using a name before assigning it raises `NameError: name 'x' is not defined`.",
+          "token_count": 76
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "sql-aggregates",
+        "title": "GROUP BY, COUNT and HAVING",
+        "language": "sql",
+        "section": "Aggregates",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "c04ad305714abebb5c347a5e32ffc3d1dd71e62a9fe6ab959b1b95f84b0cbb08"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Summarising rows",
+          "content": "Aggregate functions turn many rows into one value: `COUNT`, `SUM`, `AVG`, `MIN` and `MAX`. `GROUP BY` makes one group per distinct value and applies the aggregate to each group.\n\n```sql\nSELECT city, COUNT(*) AS students\nFROM students\nGROUP BY city;\n```\n\nEvery column in `SELECT` must either be inside an aggregate or listed in `GROUP BY`; otherwise the database cannot know which row's value to show.",
+          "token_count": 88
+        },
+        {
+          "index": 1,
+          "heading": "WHERE versus HAVING",
+          "content": "`WHERE` filters individual rows before grouping. `HAVING` filters whole groups after the aggregates are calculated.\n\n```sql\nSELECT city, AVG(score) AS average\nFROM students\nWHERE score IS NOT NULL\nGROUP BY city\nHAVING COUNT(*) >= 5;\n```",
+          "token_count": 48
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "sql-joins",
+        "title": "INNER JOIN and LEFT JOIN",
+        "language": "sql",
+        "section": "Joins",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "21f931cca652aad6e73e2c09062b188691481283f33aa7492c538b2b31e7a52c"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Why joins exist",
+          "content": "Related data is often split across tables, such as `students` and `enrollments`. A join combines rows from two tables using a condition in the `ON` clause, usually matching a key.\n\n```sql\nSELECT s.name, e.course\nFROM students s\nJOIN enrollments e ON e.student_id = s.id;\n```\n\n`s` and `e` are table aliases — short names that make the query easier to read.",
+          "token_count": 82
+        },
+        {
+          "index": 1,
+          "heading": "INNER JOIN versus LEFT JOIN",
+          "content": "`JOIN` (an inner join) keeps only rows that have a match in both tables. A student with no enrollments disappears from the result.\n\n`LEFT JOIN` keeps every row from the left table even when there is no match; the columns from the right table are filled with `NULL`.\n\n```sql\nSELECT s.name, e.course\nFROM students s\nLEFT JOIN enrollments e ON e.student_id = s.id;   -- students without courses show course = NULL\n```\n\nTo find rows with no match, add `WHERE e.student_id IS NULL` after a `LEFT JOIN`. Forgetting the `ON` condition, or using the wrong columns in it, multiplies rows and is a common source of surprising counts.",
+          "token_count": 144
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "sql-select-basics",
+        "title": "Reading a SELECT query line by line",
+        "language": "sql",
+        "section": "Queries",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "c807161d4dc76f2884c0c5521af206d30639a8395df3f7ccbe647e03e78f02a1"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "The parts of a SELECT",
+          "content": "A `SELECT` query asks a database for rows. Each clause has one job:\n\n```sql\nSELECT name, score          -- which columns to show\nFROM students               -- which table to read\nWHERE score >= 50           -- which rows to keep\nORDER BY score DESC         -- how to sort the result\nLIMIT 3;                    -- how many rows to return\n```\n\nText values go in single quotes (`WHERE city = 'Lahore'`). `SELECT *` returns every column, which is handy for exploring but fragile in real code.",
+          "token_count": 110
+        },
+        {
+          "index": 1,
+          "heading": "The order the database works in",
+          "content": "The clauses are written in one order but evaluated in another: `FROM` first, then `WHERE` filters rows, `GROUP BY` forms groups, `HAVING` filters groups, `SELECT` picks the columns, `ORDER BY` sorts, and `LIMIT` cuts the list. This is why a column alias defined in `SELECT` usually cannot be used in `WHERE`.",
+          "token_count": 68
+        },
+        {
+          "index": 2,
+          "heading": "NULL means \"unknown\"",
+          "content": "`NULL` is not zero or an empty string — it means the value is missing. Comparing with `= NULL` never matches; use `IS NULL` or `IS NOT NULL` instead.",
+          "token_count": 39
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "ts-basics",
+        "title": "What TypeScript adds to JavaScript",
+        "language": "typescript",
+        "section": "Types",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "8e6a4d670b75f2edb9316360502b023d71fab8ea5d2be644a9d3e870d1fc5652"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Type annotations",
+          "content": "TypeScript is JavaScript with types. You can describe what kind of value a variable or parameter should hold, and the TypeScript compiler checks it before the code runs.\n\n```typescript\nlet count: number = 0;\nfunction greet(name: string): string {\n  return `Hello, ${name}`;\n}\ngreet(42);   // error: Argument of type 'number' is not assignable to parameter of type 'string'.\n```\n\nThese errors appear in your editor or when you compile; the types are removed from the JavaScript that actually runs.",
+          "token_count": 106
+        },
+        {
+          "index": 1,
+          "heading": "Type inference",
+          "content": "You do not have to annotate everything. When you write `let count = 0`, TypeScript infers that `count` is a `number`, and later `count = \"zero\"` is reported as an error. Annotations are most useful on function parameters and on values whose type is not obvious.",
+          "token_count": 62
+        }
+      ]
+    },
+    {
+      "document": {
+        "slug": "ts-object-types",
+        "title": "Interfaces, optional properties and unions in TypeScript",
+        "language": "typescript",
+        "section": "Types",
+        "version": "v1",
+        "source_url": null,
+        "license_note": "Original CodeBloom lesson written for this app (2026). Not copied from third-party documentation.",
+        "content_hash": "525c0d873b10ec79fda87d56d5a478b300e7c7c2d26686424aebb8738f7d0c44"
+      },
+      "chunks": [
+        {
+          "index": 0,
+          "heading": "Describing objects",
+          "content": "An `interface` (or a `type` alias) describes the shape of an object: which properties it has and their types. A question mark marks an optional property.\n\n```typescript\ninterface Learner {\n  name: string;\n  age: number;\n  nickname?: string;   // optional\n}\nconst sara: Learner = { name: \"Sara\", age: 15 };\n```\n\nLeaving out a required property, or adding one that the interface does not declare, is reported as an error.",
+          "token_count": 92
+        },
+        {
+          "index": 1,
+          "heading": "Union types",
+          "content": "A union type allows one of several types, written with `|`. Before using a value as one specific type, check which one you have; TypeScript narrows the type inside the check.\n\n```typescript\nfunction show(id: number | string) {\n  if (typeof id === \"string\") {\n    return id.toUpperCase();   // id is a string here\n  }\n  return id.toFixed(0);        // id is a number here\n}\n```",
+          "token_count": 84
+        }
+      ]
+    }
+  ]
+}
