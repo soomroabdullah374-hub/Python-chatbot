@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — New chat (empty state) (design preview)</title>
+<!-- Route: /chat · Design width: 1440px · Generated from design/source/ChatEmpty.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb app">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="landing.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="chat-new.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <div class="input-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+      <input class="input" type="search" aria-label="Search conversation titles" placeholder="Search titles" style="border-color: var(--border-strong); background: var(--surface)">
+      <span class="kbd" aria-hidden="true">/</span>
+    </div>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="chat-explain.html" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="chat-debug.html" class="side-item"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="chat-practice.html" class="side-item"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Python dictionaries explained</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="saved.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">6</span></a>
+      <a href="settings.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar-title">New chat</h1>
+      <div style="margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+        <label for="lang-select" class="sr-only">Language</label>
+        <select id="lang-select" class="select" style="min-height: 36px"><option>Python</option><option>JavaScript</option><option>TypeScript</option><option>SQL</option><option>HTML/CSS</option></select>
+        <div class="seg" role="group" aria-label="Mode">
+          <template data-sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+            <button type="button" class="seg-btn" aria-pressed="{{ m.pressed }}" onClick="{{ m.pick }}"><span class="dot {{ m.dot }}" aria-hidden="true"></span>{{ m.label }}</button>
+          </template>
+        </div>
+      </div>
+    </header>
+
+    <main style="flex: 1 1 auto; width: 100%; max-width: 820px; margin: 0 auto; padding: 64px 24px 28px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+      <div class="rise" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
+        <span class="float" style="display: inline-flex; width: 56px; height: 56px; align-items: center; justify-content: center; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--sh-md)">
+          <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        </span>
+        <h2 class="h1" style="font-size: 38px">Programming, explained simply.</h2>
+        <p class="lead" style="font-size: 16px">Ask a question, paste a small code example, or explore a concept.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+        <template data-sc-for list="{{ starters }}" as="s" hint-placeholder-count="4">
+          <button type="button" class="card lift rise {{ s.delay }}" onClick="{{ s.pick }}" style="display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; text-align: left; font: inherit; color: var(--text); cursor: pointer">
+            <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 8px">
+              <span class="badge mono {{ s.badge }}" style="align-self: flex-start">{{ s.tag }}</span>
+              <span style="font-size: 15px; font-weight: 500">{{ s.text }}</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 4px"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+          </button>
+        </template>
+      </div>
+
+      <div class="rise d5" style="display: flex; flex-direction: column; gap: 10px">
+        <form class="composer">
+          <label for="composer" class="sr-only">Message CodeBloom</label>
+          <textarea id="composer" rows="3" placeholder="{{ placeholder }}" value="{{ draft }}" onChange="{{ onDraft }}"></textarea>
+          <div class="composer-foot">
+            <span class="badge {{ modeBadge }}"><span class="dot {{ modeDot }}" aria-hidden="true"></span>{{ modeLabel }}</span>
+            <span class="badge">Python</span>
+            <span class="composer-meta" style="margin-left: auto"><span class="kbd">Enter</span> send <span class="kbd">Shift</span>+<span class="kbd">Enter</span> new line</span>
+            <button type="button" class="btn btn-primary btn-icon" aria-label="Send message" disabled="{{ empty }}" style="border-radius: 10px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+            </button>
+          </div>
+        </form>
+        <p class="fineprint">CodeBloom never runs your code and can make mistakes. Prompts are sent to xAI — don't paste passwords or keys.</p>
+      </div>
+    </main>
+  </div>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { mode: 'Explain', draft: '' };
+  }
+  renderVals() {
+    const meta = {
+      Explain: { dot: 'dot-explain', badge: 'badge-explain', ph: 'Ask about a concept — e.g. “What is a function?”' },
+      Debug: { dot: 'dot-debug', badge: 'badge-debug', ph: 'Paste a few lines of code and the error you see…' },
+      Practice: { dot: 'dot-practice', badge: 'badge-practice', ph: 'Name a concept to practise — e.g. “for loops”' }
+    };
+    const m = this.state.mode;
+    const starters = [
+      { tag: 'PYTHON · EXPLAIN', badge: 'badge-explain', text: 'What is a variable in Python?', mode: 'Explain' },
+      { tag: 'JAVASCRIPT · EXPLAIN', badge: 'badge-explain', text: 'When do I use let instead of const?', mode: 'Explain' },
+      { tag: 'SQL · EXPLAIN', badge: 'badge-explain', text: 'Explain this SQL query line by line', mode: 'Explain' },
+      { tag: 'PYTHON · PRACTICE', badge: 'badge-practice', text: 'Give me a small loop exercise', mode: 'Practice' }
+    ].map((s, i) => ({ ...s, delay: 'd' + (i + 1), pick: () => this.setState({ draft: s.text, mode: s.mode }) }));
+    return {
+      modes: ['Explain', 'Debug', 'Practice'].map((label) => ({
+        label, dot: meta[label].dot, pressed: m === label ? 'true' : 'false', pick: () => this.setState({ mode: label })
+      })),
+      starters,
+      modeLabel: m,
+      modeDot: meta[m].dot,
+      modeBadge: meta[m].badge,
+      placeholder: meta[m].ph,
+      draft: this.state.draft,
+      empty: this.state.draft.trim().length === 0,
+      onDraft: (e) => this.setState({ draft: e.target.value })
+    };
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>

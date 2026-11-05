@@ -1,0 +1,90 @@
+[
+  {
+    "source": "source/Main.dc.html",
+    "preview": "preview/landing.html",
+    "screenshot": "screenshots/landing.png",
+    "title": "Landing",
+    "route": "/",
+    "width": 1440
+  },
+  {
+    "source": "source/Onboarding.dc.html",
+    "preview": "preview/onboarding.html",
+    "screenshot": "screenshots/onboarding.png",
+    "title": "Onboarding preferences",
+    "route": "/onboarding",
+    "width": 1440
+  },
+  {
+    "source": "source/ChatEmpty.dc.html",
+    "preview": "preview/chat-new.html",
+    "screenshot": "screenshots/chat-new.png",
+    "title": "New chat (empty state)",
+    "route": "/chat",
+    "width": 1440
+  },
+  {
+    "source": "source/ChatExplain.dc.html",
+    "preview": "preview/chat-explain.html",
+    "screenshot": "screenshots/chat-explain.png",
+    "title": "Chat \u00b7 Explain mode",
+    "route": "/chat/[conversationId]",
+    "width": 1440
+  },
+  {
+    "source": "source/ChatDebug.dc.html",
+    "preview": "preview/chat-debug.html",
+    "screenshot": "screenshots/chat-debug.png",
+    "title": "Chat \u00b7 Debug mode, streaming",
+    "route": "/chat/[conversationId]",
+    "width": 1440
+  },
+  {
+    "source": "source/ChatPractice.dc.html",
+    "preview": "preview/chat-practice.html",
+    "screenshot": "screenshots/chat-practice.png",
+    "title": "Chat \u00b7 Practice mode",
+    "route": "/chat/[conversationId]",
+    "width": 1440
+  },
+  {
+    "source": "source/Saved.dc.html",
+    "preview": "preview/saved.html",
+    "screenshot": "screenshots/saved.png",
+    "title": "Saved explanations",
+    "route": "/saved",
+    "width": 1440
+  },
+  {
+    "source": "source/Settings.dc.html",
+    "preview": "preview/settings.html",
+    "screenshot": "screenshots/settings.png",
+    "title": "Settings",
+    "route": "/settings",
+    "width": 1440
+  },
+  {
+    "source": "source/MobileChat.dc.html",
+    "preview": "preview/mobile-chat.html",
+    "screenshot": "screenshots/mobile-chat.png",
+    "title": "Mobile \u00b7 Chat",
+    "route": "/chat/[conversationId] at 390px",
+    "width": 390
+  },
+  {
+    "source": "source/MobileDrawer.dc.html",
+    "preview": "preview/mobile-drawer.html",
+    "screenshot": "screenshots/mobile-drawer.png",
+    "title": "Mobile \u00b7 Navigation drawer",
+    "route": "sidebar drawer at 390px",
+    "width": 390
+  },
+  {
+    "source": "source/Components.dc.html",
+    "preview": "preview/components.html",
+    "screenshot": "screenshots/components.png",
+    "title": "Components & states",
+    "route": "UI kit (not a route)",
+    "width": 1440
+  }
+]

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — Saved explanations (design preview)</title>
+<!-- Route: /saved · Design width: 1440px · Generated from design/source/Saved.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb app">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="landing.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="chat-new.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="chat-explain.html" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="chat-debug.html" class="side-item"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="chat-practice.html" class="side-item"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="saved.html" class="side-item" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color: var(--primary)"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">{{ total }}</span></a>
+      <a href="settings.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <main class="main" style="padding: 48px 44px 64px">
+    <div style="width: 100%; max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+      <div class="rise" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h1 class="h1">Saved explanations</h1>
+          <p class="muted" style="font-size: 15px">Answers you bookmarked. Removing one doesn't touch its conversation.</p>
+        </div>
+        <span class="badge mono">{{ countLabel }}</span>
+      </div>
+
+      <div class="rise d1" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+        <div class="input-icon" style="flex: 1 1 260px; max-width: 340px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+          <input class="input" type="search" aria-label="Search saved explanations" placeholder="Search saved">
+        </div>
+        <div class="seg" role="group" aria-label="Filter by language">
+          <template data-sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+            <button type="button" class="seg-btn" aria-pressed="{{ f.pressed }}" onClick="{{ f.pick }}">{{ f.label }}</button>
+          </template>
+        </div>
+        <div class="seg" role="group" aria-label="View" style="margin-left: auto">
+          <button type="button" class="seg-btn" aria-label="Grid view" aria-pressed="{{ gridPressed }}" onClick="{{ toGrid }}" style="padding: 0 10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"></rect><rect x="13" y="4" width="7" height="7" rx="1.5"></rect><rect x="4" y="13" width="7" height="7" rx="1.5"></rect><rect x="13" y="13" width="7" height="7" rx="1.5"></rect></svg></button>
+          <button type="button" class="seg-btn" aria-label="List view" aria-pressed="{{ listPressed }}" onClick="{{ toList }}" style="padding: 0 10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path></svg></button>
+        </div>
+      </div>
+
+      <template data-sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px">
+          <template data-sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+            <article class="card lift rise {{ r.delay }}" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+              <div style="display: flex; align-items: center; gap: 8px">
+                <span class="badge mono {{ r.badge }}">{{ r.modeU }}</span>
+                <span class="badge">{{ r.lang }}</span>
+                <button type="button" class="btn btn-ghost btn-icon btn-sm tip" data-tip="Remove" aria-label="Remove from saved" onClick="{{ r.remove }}" style="margin-left: auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l.9 12.5h9.2L17.5 7"></path></svg></button>
+              </div>
+              <a href="{{ r.href }}" style="font-size: 16px; font-weight: 600; letter-spacing: -.01em; color: var(--text); text-decoration: none">{{ r.title }}</a>
+              <p class="muted" style="font-size: 14px; line-height: 1.55">{{ r.excerpt }}</p>
+              <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--text-3)">
+                <span style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">From “{{ r.from }}”</span>
+                <span class="mono" style="flex: none">{{ r.date }}</span>
+              </div>
+            </article>
+          </template>
+        </div>
+      </template>
+
+      <template data-sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="overflow-x: auto">
+          <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px">
+            <thead>
+              <tr>
+                <th scope="col" class="label" style="padding: 12px 20px; border-bottom: 1px solid var(--border); text-align: left">Explanation</th>
+                <th scope="col" class="label" style="padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; width: 120px">Language</th>
+                <th scope="col" class="label" style="padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; width: 110px">Mode</th>
+                <th scope="col" class="label" style="padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; width: 120px">Saved</th>
+                <th scope="col" style="padding: 12px 20px; border-bottom: 1px solid var(--border); width: 60px"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template data-sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+                <tr class="row-hover">
+                  <td style="padding: 14px 20px; border-bottom: 1px solid var(--border)"><a href="{{ r.href }}" style="display: block; font-weight: 600; color: var(--text); text-decoration: none">{{ r.title }}</a><span class="small faint">{{ r.excerpt }}</span></td>
+                  <td style="padding: 14px 16px; border-bottom: 1px solid var(--border)"><span class="badge">{{ r.lang }}</span></td>
+                  <td style="padding: 14px 16px; border-bottom: 1px solid var(--border)"><span class="badge mono {{ r.badge }}">{{ r.modeU }}</span></td>
+                  <td class="mono small faint" style="padding: 14px 16px; border-bottom: 1px solid var(--border)">{{ r.date }}</td>
+                  <td style="padding: 10px 20px; border-bottom: 1px solid var(--border); text-align: right"><button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Remove from saved" onClick="{{ r.remove }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l.9 12.5h9.2L17.5 7"></path></svg></button></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </template>
+
+      <template data-sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <div class="card pop" style="padding: 56px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
+          <span class="feature-icon" style="background: var(--primary-soft); color: var(--primary)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg></span>
+          <strong style="font-size: 16px; font-weight: 600">Nothing saved here yet</strong>
+          <span class="muted" style="font-size: 14px; max-width: 360px">Use <strong>Save</strong> under any answer to keep it in this list.</span>
+          <a href="chat-new.html" class="btn btn-secondary btn-sm">Start a chat</a>
+        </div>
+      </template>
+    </div>
+  </main>
+
+  <template data-sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}">
+    <div role="status" class="toast pop" style="position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 10">
+      Removed “{{ undoTitle }}”
+      <button type="button" onClick="{{ undo }}" style="margin-left: 6px; padding: 4px 8px; border: 0; border-radius: 6px; background: rgb(255 255 255 / 12%); color: #FFFFFF; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer">Undo</button>
+    </div>
+  </template>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'All', view: 'grid', removed: [], last: null };
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const all = [
+      { id: 1, title: 'let vs const: when to use which', excerpt: 'Use const by default; let only when the name needs a new value.', from: 'let vs const in JavaScript', lang: 'JavaScript', mode: 'Explain', date: '05 Nov 2026', href: 'ChatExplain.dc.html' },
+      { id: 2, title: 'Why range() stops before the end', excerpt: 'A list of 3 items has indexes 0, 1 and 2 — range(len(x)) matches them.', from: 'IndexError in my average', lang: 'Python', mode: 'Debug', date: '05 Nov 2026', href: 'ChatDebug.dc.html' },
+      { id: 3, title: 'Checking membership with in', excerpt: '"a" in "aeiou" is True — one check instead of five.', from: 'Loop practice: count the vowels', lang: 'Python', mode: 'Practice', date: '02 Nov 2026', href: 'ChatPractice.dc.html' },
+      { id: 4, title: 'INNER JOIN vs LEFT JOIN', excerpt: 'LEFT JOIN keeps every row from the left table, even without a match.', from: 'What is a SQL JOIN?', lang: 'SQL', mode: 'Explain', date: '01 Nov 2026', href: '#' },
+      { id: 5, title: 'justify-content vs align-items', excerpt: 'One aligns along the main axis, the other across it.', from: 'Flexbox vs grid for a navbar', lang: 'HTML/CSS', mode: 'Explain', date: '31 Oct 2026', href: '#' },
+      { id: 6, title: "Looping over a dictionary's items", excerpt: 'for key, value in ages.items() gives you both at once.', from: 'Python dictionaries explained', lang: 'Python', mode: 'Explain', date: '30 Oct 2026', href: '#' }
+    ];
+    const badges = { Explain: 'badge-explain', Debug: 'badge-debug', Practice: 'badge-practice' };
+    const f = this.state.filter;
+    const kept = all.filter((r) => !this.state.removed.includes(r.id));
+    const rows = (f === 'All' ? kept : kept.filter((r) => r.lang === f)).map((r, i) => ({
+      ...r,
+      modeU: r.mode.toUpperCase(),
+      badge: badges[r.mode],
+      delay: 'd' + Math.min(i + 1, 8),
+      remove: () => {
+        this.setState({ removed: [...this.state.removed, r.id], last: r });
+        clearTimeout(this.t);
+        this.t = setTimeout(() => this.setState({ last: null }), 4000);
+      }
+    }));
+    const v = this.state.view;
+    return {
+      filters: ['All', 'Python', 'JavaScript', 'SQL', 'HTML/CSS'].map((label) => ({
+        label, pressed: f === label ? 'true' : 'false', pick: () => this.setState({ filter: label })
+      })),
+      rows,
+      total: kept.length,
+      empty: rows.length === 0,
+      isGrid: v === 'grid' && rows.length > 0,
+      isList: v === 'list' && rows.length > 0,
+      gridPressed: v === 'grid' ? 'true' : 'false',
+      listPressed: v === 'list' ? 'true' : 'false',
+      toGrid: () => this.setState({ view: 'grid' }),
+      toList: () => this.setState({ view: 'list' }),
+      countLabel: rows.length + (rows.length === 1 ? ' explanation' : ' explanations'),
+      hasUndo: !!this.state.last,
+      undoTitle: this.state.last ? this.state.last.title : '',
+      undo: () => {
+        const l = this.state.last;
+        if (l) this.setState({ removed: this.state.removed.filter((id) => id !== l.id), last: null });
+      }
+    };
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>

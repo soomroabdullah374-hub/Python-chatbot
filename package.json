@@ -1,0 +1,49 @@
+{
+  "name": "codebloom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CodeBloom — a patient programming tutor for beginners. No sign-up, no login.",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "typecheck:functions": "deno check --config supabase/functions/deno.json supabase/functions/chat/index.ts supabase/functions/data-delete/index.ts supabase/functions/ingest-content/index.ts",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "functions:bundle": "node scripts/bundle-functions.mjs",
+    "content:build": "node scripts/build-corpus.mjs",
+    "db:tests:build": "node scripts/build-db-tests.mjs",
+    "check:bundle-secrets": "node scripts/check-client-bundle.mjs"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.119.0",
+    "highlight.js": "11.12.0",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.4",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "deno": "2.9.6",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "4.3.4",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

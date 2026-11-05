@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — Components &amp; states (design preview)</title>
+<!-- Route: UI kit (not a route) · Design width: 1440px · Generated from design/source/Components.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb" style="width: 1440px; min-height: 2600px; padding: 64px 72px 80px; display: flex; flex-direction: column; gap: 56px">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border)">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span class="eyebrow">CodeBloom UI kit</span>
+      <h1 class="h2" style="font-size: 48px">Components &amp; states</h1>
+      <p class="lead" style="font-size: 16px; max-width: 640px">Every interactive element with its default, hover, focus, disabled and error state — plus the message lifecycle and recovery banners from the app flow.</p>
+    </div>
+    <span class="badge mono">cb.css · v1</span>
+  </div>
+
+  <section style="display: flex; flex-direction: column; gap: 18px">
+    <h2 class="label">01 — Color</h2>
+    <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 14px">
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #4F46E5"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Primary</strong><span class="mono small faint">#4F46E5</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #4338CA"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Primary hover</strong><span class="mono small faint">#4338CA</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #EEF0FF"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Primary soft</strong><span class="mono small faint">#EEF0FF</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #F97362"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Bloom accent</strong><span class="mono small faint">#F97362</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #0B0B12"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Ink</strong><span class="mono small faint">#0B0B12</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #11111B"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Code surface</strong><span class="mono small faint">#11111B</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #17171C"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Text</strong><span class="mono small faint">#17171C</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #52525B"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Text secondary</strong><span class="mono small faint">#52525B</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #FAFAF9; border-bottom: 1px solid var(--border)"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Background</strong><span class="mono small faint">#FAFAF9</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #F5F5F4; border-bottom: 1px solid var(--border)"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Subtle</strong><span class="mono small faint">#F5F5F4</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #E7E7E5"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Border</strong><span class="mono small faint">#E7E7E5</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #8B8B93"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Control border</strong><span class="mono small faint">#8B8B93 · 3.4:1</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #D97706"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Debug mode</strong><span class="mono small faint">#D97706</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #16A34A"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Practice mode</strong><span class="mono small faint">#16A34A</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #B45309"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Warning text</strong><span class="mono small faint">#B45309</span></div></div>
+      <div class="card" style="overflow: hidden"><div style="height: 72px; background: #DC2626"></div><div style="padding: 10px 12px"><strong style="display: block; font-size: 13px">Danger</strong><span class="mono small faint">#DC2626</span></div></div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">02 — Type · Geist &amp; Geist Mono</h2>
+      <div class="card" style="padding: 8px 24px">
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border)"><span class="mono small faint" style="width: 96px">Display 72</span><span style="font-size: 44px; line-height: 1; letter-spacing: -.045em; font-weight: 600">Explained simply</span></div>
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border)"><span class="mono small faint" style="width: 96px">H1 32</span><span class="h1">Saved explanations</span></div>
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border)"><span class="mono small faint" style="width: 96px">H3 20</span><span class="h3">Count the vowels</span></div>
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border)"><span class="mono small faint" style="width: 96px">Lead 17</span><span class="answer-lead">Use const by default.</span></div>
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border)"><span class="mono small faint" style="width: 96px">Body 15.5</span><span class="prose">A name that refers to a value.</span></div>
+        <div style="display: flex; align-items: baseline; gap: 20px; padding: 14px 0"><span class="mono small faint" style="width: 96px">Code 13.5</span><code class="mono" style="font-size: 13.5px">for i in range(3):</code></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">03 — Motion</h2>
+      <div class="card" style="overflow: hidden">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+          <tbody>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Hover / press</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">160ms · ease-out · 1px press</td></tr>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Message enter</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">520ms · rise 10px · 60ms stagger</td></tr>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Card lift</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">220ms · −3px · shadow md</td></tr>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Popover / toast</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">260ms · scale .97 → 1</td></tr>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Drawer</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">300ms · slide from left · scrim fade</td></tr>
+            <tr><td style="padding: 13px 20px; border-bottom: 1px solid var(--border); font-weight: 500">Streaming caret</td><td class="mono small faint" style="padding: 13px 20px; border-bottom: 1px solid var(--border)">1s steps · blink</td></tr>
+            <tr><td style="padding: 13px 20px; font-weight: 500">Reduced motion</td><td class="mono small faint" style="padding: 13px 20px">all animation and transition off</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 18px">
+    <h2 class="label">04 — Buttons</h2>
+    <div class="card" style="padding: 8px 24px">
+      <div style="display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border)">
+        <span></span><span class="mono small faint">Default</span><span class="mono small faint">Hover</span><span class="mono small faint">Focus</span><span class="mono small faint">Disabled</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border)">
+        <span style="font-size: 14px; font-weight: 500">Primary</span>
+        <span><button type="button" class="btn btn-primary">Start learning</button></span>
+        <span><button type="button" class="btn btn-primary is-hover">Start learning</button></span>
+        <span><button type="button" class="btn btn-primary is-focus">Start learning</button></span>
+        <span><button type="button" class="btn btn-primary" disabled>Start learning</button></span>
+      </div>
+      <div style="display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border)">
+        <span style="font-size: 14px; font-weight: 500">Secondary</span>
+        <span><button type="button" class="btn btn-secondary">Use defaults</button></span>
+        <span><button type="button" class="btn btn-secondary is-hover">Use defaults</button></span>
+        <span><button type="button" class="btn btn-secondary is-focus">Use defaults</button></span>
+        <span><button type="button" class="btn btn-secondary" disabled>Use defaults</button></span>
+      </div>
+      <div style="display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border)">
+        <span style="font-size: 14px; font-weight: 500">Ghost</span>
+        <span><button type="button" class="btn btn-ghost">Skip for now</button></span>
+        <span><button type="button" class="btn btn-ghost" style="background: var(--sunken); color: var(--text)">Skip for now</button></span>
+        <span><button type="button" class="btn btn-ghost is-focus">Skip for now</button></span>
+        <span><button type="button" class="btn btn-ghost" disabled>Skip for now</button></span>
+      </div>
+      <div style="display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 16px 0">
+        <span style="font-size: 14px; font-weight: 500">Danger</span>
+        <span><button type="button" class="btn btn-danger">Delete account</button></span>
+        <span><button type="button" class="btn btn-danger" style="background: var(--danger-hover)">Delete account</button></span>
+        <span><button type="button" class="btn btn-danger-outline is-focus">Delete all…</button></span>
+        <span><button type="button" class="btn btn-danger" disabled>Delete account</button></span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">05 — Inputs</h2>
+      <div class="card" style="padding: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+        <div class="field"><label for="c-i1" class="field-label">Default</label><input id="c-i1" class="input" placeholder="Search titles"></div>
+        <div class="field"><label for="c-i2" class="field-label">Focus</label><input id="c-i2" class="input is-focus" value="let vs con"></div>
+        <div class="field"><label for="c-i3" class="field-label">Error</label><input id="c-i3" class="input" aria-invalid="true" aria-describedby="c-e3" value=""><span id="c-e3" class="field-error"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>A title can't be empty.</span></div>
+        <div class="field"><label for="c-i4" class="field-label">Disabled</label><input id="c-i4" class="input" disabled value="Generating…"></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">06 — Selection controls</h2>
+      <div class="card" style="padding: 24px; display: flex; flex-direction: column; gap: 20px">
+        <div class="seg"><span class="seg-btn" aria-pressed="true"><span class="dot dot-explain"></span>Explain</span><span class="seg-btn"><span class="dot dot-debug"></span>Debug</span><span class="seg-btn"><span class="dot dot-practice"></span>Practice</span></div>
+        <div style="display: flex; align-items: center; gap: 20px">
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 14px"><span class="switch" aria-hidden="true"></span>Off</span>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 14px"><span class="switch" aria-hidden="true" aria-checked="true"></span>On</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <span class="opt" aria-checked="true"><span class="radio" style="border: 5px solid var(--primary)"></span><span style="font-size: 14px; font-weight: 600">Brand new</span></span>
+          <span class="opt"><span class="radio"></span><span style="font-size: 14px; font-weight: 500">Some basics</span></span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span class="chip">Explain it more simply</span>
+          <span class="chip" style="border-color: #B9BEF5; background: var(--primary-soft); color: var(--primary-text)">Hover</span>
+          <span class="badge badge-explain">Explain</span><span class="badge badge-debug">Debug</span><span class="badge badge-practice">Practice</span><span class="badge">Not executed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 18px">
+    <h2 class="label">07 — Message lifecycle</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+      <div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px"><span class="mono small faint">submitting</span><span class="status"><span class="step now"><span class="spinner" aria-hidden="true"></span>Sending…</span></span><span class="small muted">Composer locked; draft kept.</span></div>
+      <div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px"><span class="mono small faint">retrieving</span><span class="status"><span class="step now"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>Finding approved material</span></span><div class="skeleton" style="height: 10px; width: 80%"></div><div class="skeleton" style="height: 10px; width: 55%"></div></div>
+      <div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px"><span class="mono small faint">streaming</span><span class="status"><span class="step now"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>Writing answer</span></span><p style="font-size: 14px">The loop runs one step<span class="caret" aria-hidden="true"></span></p></div>
+      <div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px"><span class="mono small faint">completed</span><span class="status"><span class="step" style="color: var(--success)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Saved to history</span></span><span class="small muted">Only completed answers enter future context.</span></div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">08 — Recovery banners</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div class="banner banner-warn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><div style="flex: 1 1 auto"><strong style="display: block; font-weight: 600; color: var(--warning-text)">You've reached the limit for now</strong><span style="color: #4A3410">Your draft is saved. You can send again in [TIME].</span></div></div>
+        <div class="banner banner-danger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M12 3 2 20h20Z"></path><path d="M12 10v4M12 17h.01"></path></svg><div style="flex: 1 1 auto"><strong style="display: block; font-weight: 600; color: var(--danger-text)">The tutor isn't responding</strong><span style="color: #7A271A">This isn't anything you did. Your message is kept.</span></div><button type="button" class="btn btn-secondary btn-sm">Retry</button></div>
+        <div class="banner banner-danger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M5 5h11l3 3v11H5Z"></path><path d="M5 5l14 14"></path></svg><div style="flex: 1 1 auto"><strong style="display: block; font-weight: 600; color: var(--danger-text)">Answer received, but could not be saved</strong><span style="color: #7A271A">It won't appear in your history after you leave.</span></div><button type="button" class="btn btn-secondary btn-sm">Try saving again</button></div>
+        <div class="banner banner-info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><div style="flex: 1 1 auto"><strong style="display: block; font-weight: 600; color: var(--primary-text)">We couldn't restore your private session</strong><span style="color: var(--primary-text)">Your draft is kept. Reconnecting starts a fresh session.</span></div><button type="button" class="btn btn-primary btn-sm">Reconnect</button></div>
+        <div class="banner"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#52525B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01"></path></svg><div style="flex: 1 1 auto"><strong style="display: block; font-weight: 600">Connection lost</strong><span class="muted">Reloaded the latest saved state. Nothing was sent twice.</span></div></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <h2 class="label">09 — Feedback &amp; overlays</h2>
+      <div class="card" style="padding: 24px; display: flex; flex-direction: column; gap: 20px; background: var(--subtle)">
+        <div class="code">
+          <div class="code-head"><span>python</span><span class="code-copy is-done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Copied</span></div>
+<pre><code>message = <span class="s">"Long lines scroll inside the block, never the page — so 320px screens stay intact."</span></code></pre>
+        </div>
+        <a href="#" class="source"><span class="source-n">1</span><span><strong style="display: block; font-size: 14px; font-weight: 600">Declaring variables with let and const</strong><span class="small faint">CodeBloom library · JavaScript › Variables</span></span></a>
+        <div style="display: flex; justify-content: center"><span class="toast"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#86EFAC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Saved to your explanations</span></div>
+        <div class="dialog" role="dialog" aria-labelledby="c-dlg" style="padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <h3 id="c-dlg" class="h3" style="font-size: 17px">Delete “IndexError in my average”?</h3>
+          <p class="muted" style="font-size: 14px">This removes its messages and saved explanations. An answer still being written is cancelled.</p>
+          <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" class="btn btn-secondary">Cancel</button><button type="button" class="btn btn-danger">Delete</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>

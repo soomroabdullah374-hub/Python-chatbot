@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CodeBloom — Settings</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./cb.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="cb app" style="position: relative">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="Main.dc.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="ChatEmpty.dc.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="ChatExplain.dc.html" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="ChatDebug.dc.html" class="side-item"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="ChatPractice.dc.html" class="side-item"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="Saved.dc.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">6</span></a>
+      <a href="Settings.dc.html" class="side-item" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true" style="color: var(--primary)"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <main class="main" style="padding: 48px 44px 80px">
+    <div style="width: 100%; max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px">
+      <div class="rise" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><h1 class="h1">Settings</h1><p class="muted" style="font-size: 15px">Preferences, privacy and your data.</p></div>
+        <span role="status" class="badge" style="gap: 6px">
+          <sc-if value="{{ saving }}" hint-placeholder-val="{{ false }}"><span class="spinner" aria-hidden="true"></span>Saving…</sc-if>
+          <sc-if value="{{ notSaving }}" hint-placeholder-val="{{ true }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>All changes saved</sc-if>
+        </span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 40px">
+        <nav aria-label="Settings sections" class="rise d1" style="flex: 1 1 180px; max-width: 200px; display: flex; flex-direction: column; gap: 2px">
+          <a href="#learning" class="side-item" aria-current="page">Learning</a>
+          <a href="#composer" class="side-item">Composer</a>
+          <a href="#privacy" class="side-item">Privacy &amp; data</a>
+          <a href="#account" class="side-item">Your data</a>
+        </nav>
+
+        <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 40px">
+          <section id="learning" aria-labelledby="s-learning" class="rise d2">
+            <h2 id="s-learning" class="h3" style="font-size: 18px">Learning preferences</h2>
+            <p class="small faint" style="padding: 2px 0 14px">Defaults for every new chat.</p>
+            <div class="card">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                <div><label for="set-lang" style="display: block; font-size: 15px; font-weight: 500">Programming language</label><span class="small faint">Default language for examples.</span></div>
+                <select id="set-lang" class="select" style="min-width: 220px" onChange="{{ touch }}"><option>Python</option><option>JavaScript</option><option>TypeScript</option><option>SQL</option><option>HTML/CSS</option></select>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                <div><label for="set-level" style="display: block; font-size: 15px; font-weight: 500">Experience level</label><span class="small faint">How many terms get defined along the way.</span></div>
+                <select id="set-level" class="select" style="min-width: 220px" onChange="{{ touch }}"><option>Brand new</option><option>Some basics</option><option>Comfortable with fundamentals</option></select>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                <div><span id="set-len" style="display: block; font-size: 15px; font-weight: 500">Answer length</span><span class="small faint">You can still ask for more or less in a chat.</span></div>
+                <div class="seg" role="group" aria-labelledby="set-len">
+                  <sc-for list="{{ lengths }}" as="o" hint-placeholder-count="2">
+                    <button type="button" class="seg-btn" aria-pressed="{{ o.pressed }}" onClick="{{ o.pick }}" style="min-width: 96px">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px">
+                <div><label for="set-expl" style="display: block; font-size: 15px; font-weight: 500">Explanation language</label><span class="small faint">Roman Urdu is in beta. Code stays in English.</span></div>
+                <select id="set-expl" class="select" style="min-width: 220px" onChange="{{ touch }}"><option>English</option><option>Roman Urdu (beta)</option></select>
+              </div>
+            </div>
+          </section>
+
+          <section id="composer" aria-labelledby="s-composer" class="rise d3">
+            <h2 id="s-composer" class="h3" style="font-size: 18px; padding-bottom: 14px">Composer</h2>
+            <div class="card">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                <div style="max-width: 540px"><span id="set-enter" style="display: block; font-size: 15px; font-weight: 500">Enter sends message</span><span class="small faint">{{ enterDesc }}</span></div>
+                <button type="button" class="switch" role="switch" aria-checked="{{ enterChecked }}" aria-labelledby="set-enter" onClick="{{ toggleEnter }}"></button>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px">
+                <div style="max-width: 540px"><span id="set-motion" style="display: block; font-size: 15px; font-weight: 500">Reduce motion</span><span class="small faint">Turns off animations. Also follows your system setting.</span></div>
+                <button type="button" class="switch" role="switch" aria-checked="{{ motionChecked }}" aria-labelledby="set-motion" onClick="{{ toggleMotion }}"></button>
+              </div>
+            </div>
+          </section>
+
+          <section id="privacy" aria-labelledby="s-privacy" class="rise d4">
+            <h2 id="s-privacy" class="h3" style="font-size: 18px; padding-bottom: 14px">Privacy &amp; data</h2>
+            <div class="card">
+              <dl style="margin: 0">
+                <div style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                  <dt style="flex: 0 0 200px; font-size: 15px; font-weight: 500">Visibility</dt>
+                  <dd class="muted" style="flex: 1 1 280px; margin: 0; font-size: 14px">Your conversations are private. There are no public share links.</dd>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                  <dt style="flex: 0 0 200px; font-size: 15px; font-weight: 500">Model provider</dt>
+                  <dd class="muted" style="flex: 1 1 280px; margin: 0; font-size: 14px">Prompts are sent to xAI to generate answers, with provider storage turned off on each request. Don't paste passwords, keys or personal data.</dd>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                  <dt style="flex: 0 0 200px; font-size: 15px; font-weight: 500">Retention</dt>
+                  <dd style="flex: 1 1 280px; margin: 0"><span class="badge mono badge-debug">[PROVIDER &amp; BACKUP RETENTION — confirm before launch]</span></dd>
+                </div>
+              </dl>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px">
+                <div style="max-width: 540px"><span style="display: block; font-size: 15px; font-weight: 500">Delete all conversations</span><span class="small faint">Removes every conversation and saved explanation. This can't be undone.</span></div>
+                <button type="button" class="btn btn-danger-outline" onClick="{{ askChats }}">Delete all…</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="account" aria-labelledby="s-account" class="rise d5">
+            <h2 id="s-account" class="h3" style="font-size: 18px; padding-bottom: 14px">Your data</h2>
+            <div class="card" style="overflow: hidden">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border)">
+                <div style="display: flex; align-items: flex-start; gap: 12px; max-width: 620px">
+                  <span class="feature-icon" style="flex: none; width: 36px; height: 36px; background: var(--primary-soft); color: var(--primary)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>
+                  <div><span style="display: block; font-size: 15px; font-weight: 500">No account needed</span><span class="small faint">Your conversations and preferences are stored privately and linked to this browser. Anyone using this browser profile can see them. Clearing site data, using a private window or switching devices starts a fresh, empty workspace.</span></div>
+                </div>
+                <span class="badge mono">This browser only</span>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; background: var(--danger-soft)">
+                <div style="max-width: 540px"><span style="display: block; font-size: 15px; font-weight: 600; color: var(--danger-text)">Delete all my data</span><span style="font-size: 13px; color: #7A271A">Permanently deletes your conversations, saved explanations and preferences, then starts you fresh.</span></div>
+                <button type="button" class="btn btn-danger" onClick="{{ askAccount }}">Delete my data…</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <sc-if value="{{ dialogOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="scrim" style="position: fixed; inset: 0; z-index: 20; background: rgb(11 11 18 / 45%); display: flex; align-items: center; justify-content: center; padding: 24px">
+      <div role="dialog" aria-modal="true" aria-labelledby="dlg-title" class="dialog pop" style="width: 100%; max-width: 440px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+        <span class="feature-icon" style="background: var(--danger-soft); color: var(--danger)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20Z"></path><path d="M12 10v4M12 17h.01"></path></svg></span>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h2 id="dlg-title" class="h3">{{ dlgTitle }}</h2>
+          <p class="muted" style="font-size: 14px">{{ dlgBody }}</p>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px">
+          <button type="button" class="btn btn-secondary" onClick="{{ closeDialog }}">Cancel</button>
+          <button type="button" class="btn btn-danger" onClick="{{ closeDialog }}">{{ dlgAction }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { length: 'Concise', enter: true, motion: false, saving: false, dialog: null };
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+  touchSave() {
+    this.setState({ saving: true });
+    clearTimeout(this.t);
+    this.t = setTimeout(() => this.setState({ saving: false }), 900);
+  }
+  renderVals() {
+    const e = this.state.enter;
+    const d = this.state.dialog;
+    const copy = {
+      chats: { t: 'Delete all conversations?', b: "Every conversation and saved explanation will be removed. Answers still being written are cancelled. This can't be undone.", a: 'Delete all' },
+      account: { t: 'Delete all your data?', b: "Your conversations, saved explanations and preferences will be permanently deleted and you'll start with a fresh, empty workspace. This can't be undone.", a: 'Delete my data' }
+    };
+    const c = d ? copy[d] : copy.chats;
+    return {
+      lengths: ['Concise', 'Detailed'].map((label) => ({
+        label, pressed: this.state.length === label ? 'true' : 'false',
+        pick: () => { this.setState({ length: label }); this.touchSave(); }
+      })),
+      touch: () => this.touchSave(),
+      saving: this.state.saving,
+      notSaving: !this.state.saving,
+      enterChecked: e ? 'true' : 'false',
+      motionChecked: this.state.motion ? 'true' : 'false',
+      enterDesc: e ? 'Shift+Enter adds a new line. Mobile always shows a Send button.' : 'Enter adds a new line; Ctrl+Enter sends. Mobile always shows a Send button.',
+      toggleEnter: () => { this.setState({ enter: !e }); this.touchSave(); },
+      toggleMotion: () => { this.setState({ motion: !this.state.motion }); this.touchSave(); },
+      dialogOpen: !!d,
+      dlgTitle: c.t, dlgBody: c.b, dlgAction: c.a,
+      askChats: () => this.setState({ dialog: 'chats' }),
+      askAccount: () => this.setState({ dialog: 'account' }),
+      closeDialog: () => this.setState({ dialog: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

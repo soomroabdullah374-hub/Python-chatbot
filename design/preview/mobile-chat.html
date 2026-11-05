@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — Mobile · Chat (design preview)</title>
+<!-- Route: /chat/[conversationId] at 390px · Design width: 390px · Generated from design/source/MobileChat.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb" style="width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column">
+  <header style="flex: none; display: flex; align-items: center; gap: 6px; min-height: 56px; padding: 0 6px; background: var(--surface); border-bottom: 1px solid var(--border)">
+    <a href="mobile-drawer.html" class="btn btn-ghost" style="min-height: 44px; padding: 0 10px; color: var(--text)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>Menu
+    </a>
+    <h1 style="flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">IndexError in my average</h1>
+    <a href="chat-new.html" class="btn btn-ghost btn-icon btn-lg" aria-label="New chat" style="color: var(--text)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h8M4 20h4L19 9l-4-4L4 16Z"></path></svg>
+    </a>
+  </header>
+  <div style="flex: none; padding: 8px 12px; background: var(--surface); border-bottom: 1px solid var(--border)">
+    <div class="seg seg-full seg-lg" role="group" aria-label="Mode">
+      <template data-sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+        <button type="button" class="seg-btn" aria-pressed="{{ m.pressed }}" onClick="{{ m.pick }}" style="min-height: 38px"><span class="dot {{ m.dot }}" aria-hidden="true"></span>{{ m.label }}</button>
+      </template>
+    </div>
+  </div>
+
+  <main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 18px">
+    <div class="msg-user has-code rise" style="max-width: 100%">
+      <p style="font-size: 15px">Why does this crash?</p>
+      <div class="code">
+<pre style="padding: 10px 12px; font-size: 13.5px"><code><span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(<span class="f">len</span>(scores) + <span class="n">1</span>):
+    total += scores[i]</code></pre>
+      </div>
+    </div>
+
+    <article class="msg-ai" aria-label="CodeBloom answer" style="gap: 14px">
+      <div class="ai-head rise d1">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        <span class="ai-name">CodeBloom</span>
+        <span class="badge mono" style="margin-left: auto">Not executed</span>
+      </div>
+      <section class="sec rise d2">
+        <h2 class="label">Likely problem</h2>
+        <p style="font-size: 16px; line-height: 1.65">The loop goes one step too far. A list of 3 items has indexes 0–2, but <code class="ic">range(len(scores) + 1)</code> also gives 3.</p>
+      </section>
+      <section class="sec rise d3">
+        <h2 class="label">Minimal fix</h2>
+        <div class="code">
+          <div class="code-head"><span>python</span><button type="button" class="code-copy" style="min-height: 36px">Copy</button></div>
+<pre style="font-size: 13.5px"><code><span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(<span class="f">len</span>(scores)):  <span class="c"># stops at the last index</span>
+    total += scores[i]</code></pre>
+        </div>
+      </section>
+      <p class="muted rise d4" style="font-size: 15px">Run it again — you should see <code class="ic">85.0</code>.</p>
+      <div class="actions rise d4">
+        <button type="button" class="btn btn-ghost btn-icon btn-lg" aria-label="Save explanation"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg></button>
+        <button type="button" class="btn btn-ghost btn-icon btn-lg" aria-label="Helpful"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 10.5V20h-3v-9.5Zm0 0L11 3.5a2 2 0 0 1 2 2v4h5.3a2 2 0 0 1 2 2.3l-1.1 6.5a2 2 0 0 1-2 1.7H7.5"></path></svg></button>
+        <button type="button" class="btn btn-ghost btn-icon btn-lg" aria-label="Not helpful"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(180deg)"><path d="M7.5 10.5V20h-3v-9.5Zm0 0L11 3.5a2 2 0 0 1 2 2v4h5.3a2 2 0 0 1 2 2.3l-1.1 6.5a2 2 0 0 1-2 1.7H7.5"></path></svg></button>
+      </div>
+    </article>
+    <div class="rise d5" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px">
+      <button type="button" class="chip" style="flex: none; min-height: 40px">Explain more simply</button>
+      <button type="button" class="chip" style="flex: none; min-height: 40px">Why start at 0?</button>
+    </div>
+  </main>
+
+  <div style="flex: none; padding: 10px 12px 16px; background: var(--bg); border-top: 1px solid var(--border)">
+    <form class="composer" style="display: flex; align-items: flex-end; gap: 6px; padding: 6px 6px 6px 4px; border-radius: 22px">
+      <label for="m-composer" class="sr-only">Message CodeBloom</label>
+      <textarea id="m-composer" rows="1" placeholder="Ask a follow-up…" style="flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 11px 10px; border-radius: 18px; font-size: 16px; line-height: 1.4"></textarea>
+      <button type="button" class="btn btn-primary btn-icon btn-lg" aria-label="Send message" style="flex: none; border-radius: 50%">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+      </button>
+    </form>
+  </div>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { mode: 'Debug' };
+  }
+  renderVals() {
+    const dots = { Explain: 'dot-explain', Debug: 'dot-debug', Practice: 'dot-practice' };
+    return {
+      modes: ['Explain', 'Debug', 'Practice'].map((label) => ({
+        label, dot: dots[label], pressed: this.state.mode === label ? 'true' : 'false', pick: () => this.setState({ mode: label })
+      }))
+    };
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>

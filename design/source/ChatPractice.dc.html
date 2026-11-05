@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CodeBloom — Practice: count the vowels</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./cb.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="cb app">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="Main.dc.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="ChatEmpty.dc.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <div class="input-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+      <input class="input" type="search" aria-label="Search conversation titles" placeholder="Search titles" style="border-color: var(--border-strong)">
+      <span class="kbd" aria-hidden="true">/</span>
+    </div>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="ChatExplain.dc.html" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="ChatDebug.dc.html" class="side-item"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="ChatPractice.dc.html" class="side-item" aria-current="page"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Python dictionaries explained</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="Saved.dc.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">6</span></a>
+      <a href="Settings.dc.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar-title">Loop practice: count the vowels</h1>
+      <div style="margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+        <label for="lang-select" class="sr-only">Language</label>
+        <select id="lang-select" class="select" style="min-height: 36px"><option>Python</option><option>JavaScript</option><option>TypeScript</option><option>SQL</option><option>HTML/CSS</option></select>
+        <div class="seg" role="group" aria-label="Mode">
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-explain" aria-hidden="true"></span>Explain</button>
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-debug" aria-hidden="true"></span>Debug</button>
+          <button type="button" class="seg-btn" aria-pressed="true"><span class="dot dot-practice" aria-hidden="true"></span>Practice</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <main class="thread">
+        <div class="conv">
+          <div class="msg-user rise">Give me a small loop exercise.</div>
+
+          <article class="card card-lg rise d1" aria-label="Exercise" style="overflow: hidden; box-shadow: var(--sh-sm)">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--subtle)">
+              <span class="badge mono badge-practice">EXERCISE 1 · FOR LOOPS</span>
+              <span class="small faint">Beginner · Python</span>
+            </div>
+            <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 14px">
+              <h2 class="h3">Count the vowels</h2>
+              <p class="prose">Write a loop that counts how many vowels (a, e, i, o, u) are in a word. For <code class="ic">"banana"</code>, your program should print <strong>3</strong>.</p>
+              <div class="code">
+                <div class="code-head"><span>starter.py</span><button type="button" class="code-copy">Copy</button></div>
+<pre><code>word = <span class="s">"banana"</span>
+count = <span class="n">0</span>
+<span class="c"># your loop here</span>
+<span class="f">print</span>(count)</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <div class="msg-user has-code rise d2">
+            <p>My attempt — I get 6, not 3:</p>
+            <div class="code">
+              <div class="code-rows">
+                <div class="row"><span class="ln">1</span><span>word = <span class="s">"banana"</span></span></div>
+                <div class="row"><span class="ln">2</span><span>count = <span class="n">0</span></span></div>
+                <div class="row"><span class="ln">3</span><span><span class="k">for</span> letter <span class="k">in</span> word:</span></div>
+                <div class="row hl"><span class="ln">4</span><span>    <span class="k">if</span> letter == <span class="s">"a"</span> <span class="k">or</span> <span class="s">"e"</span> <span class="k">or</span> <span class="s">"i"</span> <span class="k">or</span> <span class="s">"o"</span> <span class="k">or</span> <span class="s">"u"</span>:</span></div>
+                <div class="row"><span class="ln">5</span><span>        count += <span class="n">1</span></span></div>
+                <div class="row"><span class="ln">6</span><span><span class="f">print</span>(count)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <article class="msg-ai" aria-label="CodeBloom feedback">
+            <div class="ai-head rise d3">
+              <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+              <span class="ai-name">CodeBloom</span>
+              <span class="badge mono badge-practice">FEEDBACK</span>
+              <span class="badge" style="margin-left: auto"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>Not executed</span>
+            </div>
+            <p class="answer-lead rise d4">You're close — the loop is right. <strong>Line 4</strong> is the only thing to change.</p>
+            <p class="prose rise d4">Python reads <code class="ic">letter == "a" or "e"</code> as <code class="ic">(letter == "a") or "e"</code>. A non-empty string like <code class="ic">"e"</code> counts as true, so the condition is always true and all 6 letters get counted.</p>
+
+            <section class="card rise d5" aria-labelledby="hints-h" style="overflow: hidden">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border)">
+                <h2 id="hints-h" style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"></path></svg>Hints</h2>
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <div aria-hidden="true" style="display: flex; gap: 4px">
+                    <span style="width: 22px; height: 4px; border-radius: 2px; background: var(--debug)"></span>
+                    <span style="width: 22px; height: 4px; border-radius: 2px; background: {{ bar2 }}; transition: background-color 300ms var(--ease)"></span>
+                    <span style="width: 22px; height: 4px; border-radius: 2px; background: {{ bar3 }}; transition: background-color 300ms var(--ease)"></span>
+                  </div>
+                  <span class="mono small faint">{{ hintCount }} of 3</span>
+                </div>
+              </div>
+              <ol style="margin: 0; padding: 0; list-style: none">
+                <li style="display: flex; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 15px"><span class="badge mono badge-debug" style="flex: none">1</span><span>Compare <code class="ic">letter</code> with each vowel separately — or check whether it belongs to a group of vowels.</span></li>
+                <sc-if value="{{ showH2 }}" hint-placeholder-val="{{ false }}">
+                  <li class="rise" style="display: flex; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 15px"><span class="badge mono badge-debug" style="flex: none">2</span><span>Python's <code class="ic">in</code> checks membership: <code class="ic">"a" in "aeiou"</code> is <code class="ic">True</code>.</span></li>
+                </sc-if>
+                <sc-if value="{{ showH3 }}" hint-placeholder-val="{{ false }}">
+                  <li class="rise" style="display: flex; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 15px"><span class="badge mono badge-debug" style="flex: none">3</span><span>Replace line 4 with a single <code class="ic">in</code> check against <code class="ic">"aeiou"</code>.</span></li>
+                </sc-if>
+              </ol>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 18px; background: var(--subtle)">
+                <sc-if value="{{ canHint }}" hint-placeholder-val="{{ true }}">
+                  <button type="button" class="btn btn-secondary btn-sm" onClick="{{ nextHint }}">{{ hintLabel }}</button>
+                </sc-if>
+                <sc-if value="{{ noSolution }}" hint-placeholder-val="{{ true }}">
+                  <button type="button" class="btn btn-link btn-sm" onClick="{{ reveal }}">Show full solution</button>
+                </sc-if>
+                <span class="small faint" style="margin-left: auto">Try again first, then send your new attempt.</span>
+              </div>
+            </section>
+
+            <sc-if value="{{ solution }}" hint-placeholder-val="{{ false }}">
+              <section class="sec rise" aria-labelledby="sol-h">
+                <h2 id="sol-h" class="label">Solution</h2>
+                <div class="code">
+                  <div class="code-head"><span>solution.py</span><span class="badge mono" style="height: 20px; background: rgb(134 239 172 / 12%); border-color: rgb(134 239 172 / 25%); color: #86EFAC">prints 3</span></div>
+                  <div class="code-rows">
+                    <div class="row"><span class="ln">1</span><span>word = <span class="s">"banana"</span></span></div>
+                    <div class="row"><span class="ln">2</span><span>count = <span class="n">0</span></span></div>
+                    <div class="row"><span class="ln">3</span><span><span class="k">for</span> letter <span class="k">in</span> word:</span></div>
+                    <div class="row add"><span class="ln">4</span><span>    <span class="k">if</span> letter <span class="k">in</span> <span class="s">"aeiou"</span>:</span></div>
+                    <div class="row"><span class="ln">5</span><span>        count += <span class="n">1</span></span></div>
+                    <div class="row"><span class="ln">6</span><span><span class="f">print</span>(count)</span></div>
+                  </div>
+                </div>
+                <div class="check"><p style="font-size: 15px"><span class="badge mono badge-explain" style="margin-right: 10px">CHECK</span>What would the fixed program print for <code class="ic">"queue"</code>?</p><button type="button" class="btn btn-secondary btn-sm">Answer</button></div>
+              </section>
+            </sc-if>
+          </article>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 8px">
+            <form class="composer">
+              <label for="composer" class="sr-only">Send your next attempt</label>
+              <textarea id="composer" rows="2" placeholder="Paste your next attempt…" style="font-family: var(--mono); font-size: 14px"></textarea>
+              <div class="composer-foot">
+                <span class="badge badge-practice"><span class="dot dot-practice" aria-hidden="true"></span>Practice</span>
+                <span class="badge">Python</span>
+                <span class="composer-meta" style="margin-left: auto"><span class="kbd">Enter</span> send</span>
+                <button type="button" class="btn btn-primary btn-icon" aria-label="Send attempt" style="border-radius: 10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel" aria-label="Exercise progress">
+        <section style="display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; align-items: center; justify-content: space-between"><h2 class="label">Progress</h2><span class="mono small faint">{{ stepsDone }}/5</span></div>
+          <div aria-hidden="true" style="height: 6px; border-radius: 999px; background: var(--sunken); overflow: hidden"><div style="height: 100%; width: {{ progress }}; border-radius: 999px; background: var(--practice); transition: width 500ms var(--ease)"></div></div>
+          <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; font-size: 14px">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
+              <li aria-current="{{ st.current }}" style="display: flex; align-items: center; gap: 12px; padding: 9px 0">
+                <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}">
+                  <span class="pop" style="display: inline-flex; width: 22px; height: 22px; align-items: center; justify-content: center; border-radius: 50%; background: var(--practice)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
+                </sc-if>
+                <sc-if value="{{ st.active }}" hint-placeholder-val="{{ false }}">
+                  <span class="live-dot" style="width: 22px; height: 22px; border-radius: 50%; border: 6px solid var(--primary); background: var(--surface)"></span>
+                </sc-if>
+                <sc-if value="{{ st.todo }}" hint-placeholder-val="{{ true }}">
+                  <span style="width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--control)"></span>
+                </sc-if>
+                <span style="flex: 1 1 auto">{{ st.label }}</span>
+                <span class="mono small faint">{{ st.meta }}</span>
+              </li>
+            </sc-for>
+          </ol>
+        </section>
+        <section style="display: flex; flex-direction: column; gap: 10px">
+          <h2 class="label">Concept</h2>
+          <div class="card" style="padding: 14px 16px; font-size: 14px; line-height: 1.55">
+            <span class="badge mono badge-explain">PYTHON · CONTROL FLOW</span>
+            <strong style="display: block; padding-top: 8px; font-weight: 600">for loops over strings</strong>
+            <span class="muted">A for loop visits each character of a string, one at a time.</span>
+          </div>
+          <a href="ChatExplain.dc.html" style="font-size: 14px; font-weight: 500">Explain this concept first</a>
+        </section>
+      </aside>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { hints: 1, solution: false };
+  }
+  renderVals() {
+    const h = this.state.hints;
+    const sol = this.state.solution;
+    const stage = sol ? 4 : 2;
+    const list = [
+      { label: 'Exercise', meta: 'done' },
+      { label: 'Attempt 1', meta: 'done' },
+      { label: 'Hints', meta: h + '/3' },
+      { label: 'Attempt 2', meta: sol ? 'skipped' : '' },
+      { label: 'Understanding check', meta: '' }
+    ];
+    const steps = list.map((s, i) => {
+      const done = i < stage && !(sol && i === 3);
+      const active = i === stage;
+      return { ...s, done, active, todo: !done && !active, current: active ? 'step' : 'false' };
+    });
+    const doneCount = steps.filter((s) => s.done).length;
+    return {
+      hintCount: h,
+      bar2: h >= 2 ? 'var(--debug)' : 'var(--sunken)',
+      bar3: h >= 3 ? 'var(--debug)' : 'var(--sunken)',
+      showH2: h >= 2,
+      showH3: h >= 3,
+      canHint: h < 3,
+      hintLabel: 'Show hint ' + (h + 1) + ' of 3',
+      nextHint: () => this.setState({ hints: Math.min(3, h + 1) }),
+      solution: sol,
+      noSolution: !sol,
+      reveal: () => this.setState({ solution: true }),
+      steps,
+      stepsDone: doneCount,
+      progress: (doneCount / 5) * 100 + '%'
+    };
+  }
+}
+</script>
+</body>
+</html>

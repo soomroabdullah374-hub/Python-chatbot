@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — Chat · Explain mode (design preview)</title>
+<!-- Route: /chat/[conversationId] · Design width: 1440px · Generated from design/source/ChatExplain.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb app">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="landing.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="chat-new.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <div class="input-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+      <input class="input" type="search" aria-label="Search conversation titles" placeholder="Search titles" style="border-color: var(--border-strong)">
+      <span class="kbd" aria-hidden="true">/</span>
+    </div>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="chat-explain.html" class="side-item" aria-current="page"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="chat-debug.html" class="side-item"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="chat-practice.html" class="side-item"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Python dictionaries explained</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="saved.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">{{ savedCount }}</span></a>
+      <a href="settings.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar-title">let vs const in JavaScript</h1>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Rename conversation" style="margin-left: -6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16Z"></path></svg>
+      </button>
+      <div style="margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+        <label for="lang-select" class="sr-only">Language</label>
+        <select id="lang-select" class="select" style="min-height: 36px"><option>JavaScript</option><option>Python</option><option>TypeScript</option><option>SQL</option><option>HTML/CSS</option></select>
+        <div class="seg" role="group" aria-label="Mode">
+          <button type="button" class="seg-btn" aria-pressed="true"><span class="dot dot-explain" aria-hidden="true"></span>Explain</button>
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-debug" aria-hidden="true"></span>Debug</button>
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-practice" aria-hidden="true"></span>Practice</button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-icon" aria-label="Conversation actions">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+      <main class="thread">
+        <div class="conv">
+          <div class="msg-user rise">When should I use let instead of const? I keep mixing them up.</div>
+
+          <article class="msg-ai" aria-label="CodeBloom answer">
+            <div class="ai-head rise d1">
+              <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+              <span class="ai-name">CodeBloom</span>
+              <span class="badge mono badge-explain">EXPLAIN · JAVASCRIPT</span>
+              <span class="small faint" style="margin-left: auto">2 sources</span>
+            </div>
+
+            <section class="sec rise d2">
+              <h2 class="label">Short answer</h2>
+              <p class="answer-lead">Use <code class="ic">const</code> by default. Use <code class="ic">let</code> only when the variable needs a new value later.</p>
+            </section>
+
+            <section class="sec rise d3">
+              <h2 class="label">Simple explanation</h2>
+              <p class="prose">Both create a <strong>variable</strong> — a name that refers to a value. The difference is whether you can <strong>reassign</strong> it, which means pointing that name at a different value. <code class="ic">let</code> allows it; <code class="ic">const</code> doesn't.<sup><a href="#src1" style="font-size: 11px; font-weight: 600; text-decoration: none">[1]</a></sup></p>
+            </section>
+
+            <section class="sec rise d4">
+              <h2 class="label">Example</h2>
+              <div class="code">
+                <div class="code-head">
+                  <span>javascript</span>
+                  <template data-sc-if value="{{ notCopied }}" hint-placeholder-val="{{ true }}">
+                    <button type="button" class="code-copy" onClick="{{ copy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"></rect><path d="M15.5 5.5V5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 5v9A1.5 1.5 0 0 0 5 15.5h.5"></path></svg>Copy</button>
+                  </template>
+                  <template data-sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" class="code-copy is-done pop" onClick="{{ copy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Copied</button>
+                  </template>
+                </div>
+                <div class="code-rows">
+                  <div class="row"><span class="ln">1</span><span><span class="k">const</span> name = <span class="s">"Sara"</span>;</span></div>
+                  <div class="row"><span class="ln">2</span><span><span class="k">let</span> score = <span class="n">0</span>;</span></div>
+                  <div class="row"><span class="ln">3</span><span> </span></div>
+                  <div class="row"><span class="ln">4</span><span>score = score + <span class="n">10</span>;   <span class="c">// OK: let can be reassigned</span></span></div>
+                  <div class="row"><span class="ln">5</span><span>console.<span class="f">log</span>(score);   <span class="c">// 10</span></span></div>
+                  <div class="row hl"><span class="ln">6</span><span>name = <span class="s">"Ali"</span>;         <span class="c">// TypeError: Assignment to constant variable.</span></span></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="sec rise d5">
+              <h2 class="label">What the code does</h2>
+              <ol style="margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; font-size: 15px">
+                <li class="row-hover" style="display: flex; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border)"><span class="badge mono" style="flex: none">L1</span><span>Creates <code class="ic">name</code> with <code class="ic">const</code> — it will always refer to <code class="ic">"Sara"</code>.</span></li>
+                <li class="row-hover" style="display: flex; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border)"><span class="badge mono" style="flex: none">L2</span><span>Creates <code class="ic">score</code> with <code class="ic">let</code>, starting at 0.</span></li>
+                <li class="row-hover" style="display: flex; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border)"><span class="badge mono" style="flex: none">L4</span><span>Gives <code class="ic">score</code> a new value. Allowed, because it's <code class="ic">let</code>.</span></li>
+                <li class="row-hover" style="display: flex; gap: 14px; padding: 11px 16px"><span class="badge mono badge-debug" style="flex: none">L6</span><span>Tries to reassign <code class="ic">name</code>. JavaScript stops with a TypeError.</span></li>
+              </ol>
+            </section>
+
+            <section class="note rise d6" aria-labelledby="mistake-h">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M12 3 2 20h20Z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <h2 id="mistake-h" style="font-size: 14px; font-weight: 600; color: var(--warning-text)">Common mistake</h2>
+                <p style="font-size: 15px; line-height: 1.7; color: #4A3410">Thinking <code class="ic">const</code> freezes the value. A <code class="ic">const</code> array can still grow with <code class="ic">push()</code> — you just can't point the name at a different array.</p>
+              </div>
+            </section>
+
+            <section class="check rise d7">
+              <p style="font-size: 15px"><span class="badge mono badge-explain" style="margin-right: 10px">CHECK</span>Will <code class="ic">const total = 5; total++;</code> work?</p>
+              <button type="button" class="btn btn-secondary btn-sm">Answer the check</button>
+            </section>
+
+            <div class="sec rise d8" id="src1">
+              <h2 class="label">Sources</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px">
+                <a href="#" class="source"><span class="source-n">1</span><span style="min-width: 0"><strong style="display: block; font-size: 14px; font-weight: 600">Declaring variables with let and const</strong><span class="small faint">CodeBloom library · JavaScript › Variables</span></span></a>
+                <a href="#" class="source"><span class="source-n">2</span><span style="min-width: 0"><strong style="display: block; font-size: 14px; font-weight: 600">Reading a TypeError</strong><span class="small faint">CodeBloom library · JavaScript › Errors</span></span></a>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn btn-ghost btn-icon btn-sm tip" data-tip="Copy answer" aria-label="Copy answer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"></rect><path d="M15.5 5.5V5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 5v9A1.5 1.5 0 0 0 5 15.5h.5"></path></svg></button>
+              <template data-sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+                <button type="button" class="btn btn-sm pop" aria-pressed="true" onClick="{{ toggleSave }}" style="background: var(--primary-soft); color: var(--primary-text)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg>Saved</button>
+              </template>
+              <template data-sc-if value="{{ notSaved }}" hint-placeholder-val="{{ true }}">
+                <button type="button" class="btn btn-ghost btn-sm" aria-pressed="false" onClick="{{ toggleSave }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg>Save</button>
+              </template>
+              <span class="vsep" aria-hidden="true"></span>
+              <button type="button" class="btn btn-ghost btn-icon btn-sm tip" data-tip="Helpful" aria-label="Helpful" aria-pressed="{{ upPressed }}" onClick="{{ voteUp }}" style="{{ upStyle }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 10.5V20h-3v-9.5Zm0 0L11 3.5a2 2 0 0 1 2 2v4h5.3a2 2 0 0 1 2 2.3l-1.1 6.5a2 2 0 0 1-2 1.7H7.5"></path></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon btn-sm tip" data-tip="Not helpful" aria-label="Not helpful" aria-pressed="{{ downPressed }}" onClick="{{ voteDown }}" style="{{ downStyle }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(180deg)"><path d="M7.5 10.5V20h-3v-9.5Zm0 0L11 3.5a2 2 0 0 1 2 2v4h5.3a2 2 0 0 1 2 2.3l-1.1 6.5a2 2 0 0 1-2 1.7H7.5"></path></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon btn-sm tip" data-tip="Retry" aria-label="Retry answer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"></path><path d="M19.5 4.5v4h-4"></path></svg></button>
+              <template data-sc-if value="{{ voted }}" hint-placeholder-val="{{ false }}">
+                <span class="small faint pop" role="status" style="margin-left: 8px">Thanks — that helps us improve.</span>
+              </template>
+            </div>
+          </article>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button type="button" class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>Explain it more simply</button>
+            <button type="button" class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>Show more detail</button>
+            <button type="button" class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>What about var?</button>
+            <a href="chat-practice.html" class="chip" style="text-decoration: none"><span class="dot dot-practice" aria-hidden="true"></span>Give me a practice exercise</a>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 12px">
+            <form class="composer">
+              <label for="composer" class="sr-only">Message CodeBloom</label>
+              <textarea id="composer" rows="2" placeholder="Ask a follow-up…"></textarea>
+              <div class="composer-foot">
+                <span class="badge badge-explain"><span class="dot dot-explain" aria-hidden="true"></span>Explain</span>
+                <span class="badge">JavaScript</span>
+                <span class="composer-meta" style="margin-left: auto"><span class="kbd">Enter</span> send</span>
+                <button type="button" class="btn btn-primary btn-icon" aria-label="Send message" disabled style="border-radius: 10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
+              </div>
+            </form>
+            <p class="fineprint">CodeBloom never runs your code and can make mistakes. Prompts are sent to xAI — don't paste passwords or keys.</p>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel" aria-label="Learning panel">
+        <section style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; justify-content: space-between"><h2 class="label">Key terms</h2><span class="badge mono">3</span></div>
+          <dl style="margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+            <div class="row-hover" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px"><dt style="font-weight: 600">Variable</dt><dd style="margin: 2px 0 0; color: var(--text-2)">A name that refers to a value.</dd></div>
+            <div class="row-hover" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px"><dt style="font-weight: 600">Reassign</dt><dd style="margin: 2px 0 0; color: var(--text-2)">Make a name refer to a different value.</dd></div>
+            <div class="row-hover" style="padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px"><dt style="font-weight: 600">TypeError</dt><dd style="margin: 2px 0 0; color: var(--text-2)">An error for using a value in a way it doesn't allow.</dd></div>
+          </dl>
+        </section>
+        <section class="hero" style="border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <span class="badge mono" style="position: relative; align-self: flex-start; background: rgb(22 163 74 / 18%); border-color: rgb(134 239 172 / 30%); color: #86EFAC">NEXT STEP</span>
+          <p style="position: relative; font-size: 15px; font-weight: 500; color: #FFFFFF">Try one short exercise on <code class="mono" style="color: #C4B5FD">let</code> and <code class="mono" style="color: #C4B5FD">const</code>.</p>
+          <a href="chat-practice.html" class="btn btn-light btn-sm" style="position: relative; align-self: flex-start">Start practice<svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </section>
+        <section style="display: flex; flex-direction: column; gap: 10px">
+          <h2 class="label">Answer settings</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="badge">Concise</span><span class="badge">Brand new</span><span class="badge">English</span></div>
+          <a href="settings.html" style="font-size: 14px; font-weight: 500">Change preferences</a>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <template data-sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+    <div role="status" class="toast pop" style="position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 10">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#86EFAC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Code copied to clipboard
+    </div>
+  </template>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { copied: false, saved: true, vote: null };
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const v = this.state.vote;
+    const on = 'background: var(--primary-soft); color: var(--primary-text)';
+    return {
+      copied: this.state.copied,
+      notCopied: !this.state.copied,
+      copy: () => {
+        this.setState({ copied: true });
+        clearTimeout(this.t);
+        this.t = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      saved: this.state.saved,
+      notSaved: !this.state.saved,
+      savedCount: this.state.saved ? 6 : 5,
+      toggleSave: () => this.setState({ saved: !this.state.saved }),
+      upPressed: v === 'up' ? 'true' : 'false',
+      downPressed: v === 'down' ? 'true' : 'false',
+      upStyle: v === 'up' ? on : '',
+      downStyle: v === 'down' ? on : '',
+      voted: v !== null,
+      voteUp: () => this.setState({ vote: v === 'up' ? null : 'up' }),
+      voteDown: () => this.setState({ vote: v === 'down' ? null : 'down' })
+    };
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>

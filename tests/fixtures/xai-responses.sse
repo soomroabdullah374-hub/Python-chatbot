@@ -1,0 +1,15 @@
+event: response.created
+data: {"type":"response.created","response":{"id":"resp_fixture_1","status":"in_progress"}}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","item_id":"msg_1","output_index":0,"content_index":0,"delta":"## Short answer\n\n"}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","item_id":"msg_1","output_index":0,"content_index":0,"delta":"Use `const` by default"}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","item_id":"msg_1","output_index":0,"content_index":0,"delta":" [S1]."}
+
+event: response.completed
+data: {"type":"response.completed","response":{"id":"resp_fixture_1","status":"completed","usage":{"input_tokens":812,"output_tokens":40,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":852}}}
+

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CodeBloom — Debug: IndexError</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./cb.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div class="cb app">
+
+  <aside class="side" aria-label="Sidebar">
+    <div class="side-head">
+      <a href="Main.dc.html" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </a>
+      <button type="button" class="btn btn-ghost btn-icon btn-sm" aria-label="Collapse sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path></svg>
+      </button>
+    </div>
+    <a href="ChatEmpty.dc.html" class="btn btn-primary btn-block">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <div class="input-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+      <input class="input" type="search" aria-label="Search conversation titles" placeholder="Search titles" style="border-color: var(--border-strong)">
+      <span class="kbd" aria-hidden="true">/</span>
+    </div>
+    <nav class="side-nav" aria-label="Conversations">
+      <span class="side-label">Today</span>
+      <a href="ChatExplain.dc.html" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="ChatDebug.dc.html" class="side-item" aria-current="page"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span><sc-if value="{{ streaming }}" hint-placeholder-val="{{ true }}"><span class="spinner" aria-label="Generating"></span></sc-if></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="ChatPractice.dc.html" class="side-item"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+      <a href="#" class="side-item"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Python dictionaries explained</span></a>
+    </nav>
+    <div class="side-foot">
+      <a href="Saved.dc.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">6</span></a>
+      <a href="Settings.dc.html" class="side-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar-title">IndexError in my average</h1>
+      <div style="margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+        <label for="lang-select" class="sr-only">Language</label>
+        <select id="lang-select" class="select" style="min-height: 36px"><option>Python</option><option>JavaScript</option><option>TypeScript</option><option>SQL</option><option>HTML/CSS</option></select>
+        <div class="seg" role="group" aria-label="Mode">
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-explain" aria-hidden="true"></span>Explain</button>
+          <button type="button" class="seg-btn" aria-pressed="true"><span class="dot dot-debug" aria-hidden="true"></span>Debug</button>
+          <button type="button" class="seg-btn" aria-pressed="false"><span class="dot dot-practice" aria-hidden="true"></span>Practice</button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-icon" aria-label="Show learning panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M14.5 4.5v15"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="thread">
+      <div class="conv" style="max-width: 800px">
+        <div class="msg-user has-code rise">
+          <p>This should print the average, but it crashes:</p>
+          <div class="code">
+            <div class="code-rows">
+              <div class="row"><span class="ln">1</span><span>scores = [<span class="n">72</span>, <span class="n">88</span>, <span class="n">95</span>]</span></div>
+              <div class="row"><span class="ln">2</span><span>total = <span class="n">0</span></span></div>
+              <div class="row hl"><span class="ln">3</span><span><span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(<span class="f">len</span>(scores) + <span class="n">1</span>):</span></div>
+              <div class="row"><span class="ln">4</span><span>    total += scores[i]</span></div>
+              <div class="row"><span class="ln">5</span><span><span class="f">print</span>(total / <span class="f">len</span>(scores))</span></div>
+            </div>
+          </div>
+          <p class="mono" style="font-size: 13px; color: var(--danger-text)">IndexError: list index out of range</p>
+        </div>
+
+        <article class="msg-ai" aria-label="CodeBloom answer" aria-busy="{{ busy }}">
+          <div class="ai-head rise d1">
+            <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+            <span class="ai-name">CodeBloom</span>
+            <span class="badge mono badge-debug">DEBUG · PYTHON</span>
+            <span class="badge" style="margin-left: auto">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>
+              Not executed — based on reading your code
+            </span>
+          </div>
+
+          <section class="sec rise d2">
+            <h2 class="label">Likely problem</h2>
+            <p class="answer-lead">The loop runs one step too many. <code class="ic">len(scores)</code> is 3, so <code class="ic">range(len(scores) + 1)</code> gives 0, 1, 2, 3 — but the last item sits at index 2. When <code class="ic">i</code> is 3, <code class="ic">scores[3]</code> doesn't exist.</p>
+          </section>
+
+          <section class="sec rise d3">
+            <h2 class="label">Minimal fix</h2>
+            <div class="code">
+              <div class="code-head"><span>python · line 3</span><button type="button" class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"></rect><path d="M15.5 5.5V5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 5v9A1.5 1.5 0 0 0 5 15.5h.5"></path></svg>Copy fix</button></div>
+              <div class="code-rows">
+                <div class="row del"><span class="sig" aria-label="removed">−</span><span style="opacity: .8"><span class="k">for</span> i <span class="k">in</span> range(len(scores) + 1):</span></div>
+                <div class="row add"><span class="sig" aria-label="added">+</span><span><span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(<span class="f">len</span>(scores)):</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="sec rise d4">
+            <h2 class="label">Why it works</h2>
+            <p class="prose">Indexes start at 0, so a list of 3 items has indexes 0, 1 and 2. <code class="ic">range(len(scores))</code> produces exactly those numbers, so the loop stops before it<sc-if value="{{ streaming }}" hint-placeholder-val="{{ true }}"><span class="caret" aria-hidden="true"></span></sc-if><sc-if value="{{ stopped }}" hint-placeholder-val="{{ false }}"><span>…</span></sc-if></p>
+          </section>
+
+          <sc-if value="{{ streaming }}" hint-placeholder-val="{{ true }}">
+            <div class="sec">
+              <div class="skeleton" style="height: 12px; width: 92%"></div>
+              <div class="skeleton" style="height: 12px; width: 64%"></div>
+            </div>
+            <div role="status" class="status" style="padding-top: 6px">
+              <span class="step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Accepted</span>
+              <span class="step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>Retrieved 1 source</span>
+              <span class="step now"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>Writing answer</span>
+              <span class="step" style="opacity: .6">Save</span>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ stopped }}" hint-placeholder-val="{{ false }}">
+            <div class="banner banner-warn pop" role="status">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+              <div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px">
+                <strong style="font-weight: 600; color: var(--warning-text)">Answer interrupted</strong>
+                <span style="color: #4A3410">You stopped this answer. The partial text is kept, but it won't be used as context.</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onClick="{{ retry }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"></path><path d="M19.5 4.5v4h-4"></path></svg>Retry</button>
+            </div>
+          </sc-if>
+        </article>
+
+        <sc-if value="{{ streaming }}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; justify-content: center">
+            <button type="button" class="btn btn-secondary btn-sm pop" style="border-radius: 999px; box-shadow: var(--sh-md)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>Jump to latest
+            </button>
+          </div>
+        </sc-if>
+
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <form class="composer">
+            <label for="composer" class="sr-only">Message CodeBloom</label>
+            <textarea id="composer" rows="2" placeholder="{{ placeholder }}"></textarea>
+            <div class="composer-foot">
+              <span class="badge badge-debug"><span class="dot dot-debug" aria-hidden="true"></span>Debug</span>
+              <span class="badge">Python</span>
+              <sc-if value="{{ streaming }}" hint-placeholder-val="{{ true }}">
+                <button type="button" class="btn btn-dark btn-sm" onClick="{{ stop }}" style="margin-left: auto; min-height: 36px; border-radius: 10px">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg>Stop
+                </button>
+              </sc-if>
+              <sc-if value="{{ stopped }}" hint-placeholder-val="{{ false }}">
+                <span class="composer-meta" style="margin-left: auto"><span class="kbd">Enter</span> send</span>
+                <button type="button" class="btn btn-primary btn-icon" aria-label="Send message" style="border-radius: 10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
+              </sc-if>
+            </div>
+          </form>
+          <p class="fineprint">Stopping keeps the partial answer, marked as interrupted. Nothing is retried automatically.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { streaming: true };
+  }
+  renderVals() {
+    const s = this.state.streaming;
+    return {
+      streaming: s,
+      stopped: !s,
+      busy: s ? 'true' : 'false',
+      placeholder: s ? 'You can type your next message while CodeBloom writes…' : 'Ask a follow-up…',
+      stop: () => this.setState({ streaming: false }),
+      retry: () => this.setState({ streaming: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

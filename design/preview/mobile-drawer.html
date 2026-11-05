@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeBloom — Mobile · Navigation drawer (design preview)</title>
+<!-- Route: sidebar drawer at 390px · Design width: 390px · Generated from design/source/MobileDrawer.dc.html -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="cb.css">
+<style>
+body{margin:0}
+.dc-rendered .rise,.dc-rendered .fade{animation:none!important}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="tpl">
+
+<div class="cb" style="position: relative; width: 390px; height: 844px; overflow: hidden">
+  <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; flex-direction: column">
+    <div style="min-height: 56px; background: var(--surface); border-bottom: 1px solid var(--border)"></div>
+    <div style="min-height: 54px; background: var(--surface); border-bottom: 1px solid var(--border)"></div>
+    <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="align-self: flex-end; width: 72%; height: 72px; border-radius: 18px 18px 6px 18px; background: var(--primary-soft); border: 1px solid #DFE3FE"></div>
+      <div style="width: 40%; height: 12px; border-radius: 4px; background: var(--sunken)"></div>
+      <div style="width: 92%; height: 12px; border-radius: 4px; background: var(--sunken)"></div>
+      <div style="width: 78%; height: 12px; border-radius: 4px; background: var(--sunken)"></div>
+      <div style="width: 100%; height: 96px; border-radius: 12px; background: var(--code-bg)"></div>
+    </div>
+  </div>
+  <a href="mobile-chat.html" aria-label="Close menu" class="scrim" style="position: absolute; inset: 0; background: rgb(11 11 18 / 50%)"></a>
+
+  <nav aria-label="Main menu" class="drawer" style="position: absolute; top: 0; left: 0; bottom: 0; width: 316px; background: var(--subtle); border-right: 1px solid var(--border); box-shadow: 12px 0 40px rgb(11 11 18 / 22%); padding: 0 10px 14px; display: flex; flex-direction: column; gap: 12px">
+    <div style="min-height: 56px; display: flex; align-items: center; justify-content: space-between; padding-left: 8px">
+      <span class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#4F46E5"></rect><g fill="#FFFFFF" fill-opacity="0.94"><ellipse cx="12" cy="7.6" rx="2.5" ry="3.4"></ellipse><ellipse cx="12" cy="16.4" rx="2.5" ry="3.4"></ellipse><ellipse cx="7.6" cy="12" rx="3.4" ry="2.5"></ellipse><ellipse cx="16.4" cy="12" rx="3.4" ry="2.5"></ellipse></g><circle cx="12" cy="12" r="2.1" fill="#F97362"></circle></svg>
+        CodeBloom
+      </span>
+      <a href="mobile-chat.html" class="btn btn-ghost btn-icon btn-lg" aria-label="Close menu" style="color: var(--text)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </a>
+    </div>
+    <a href="chat-new.html" class="btn btn-primary btn-lg btn-block rise d1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New chat
+    </a>
+    <div class="input-icon rise d2">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4-4"></path></svg>
+      <input class="input input-lg" type="search" aria-label="Search conversation titles" placeholder="Search titles" style="font-size: 16px; border-color: var(--border-strong)">
+    </div>
+    <div class="rise d3" style="flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 1px">
+      <span class="side-label">Today</span>
+      <a href="chat-explain.html" class="side-item" style="min-height: 44px; font-size: 15px"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">let vs const in JavaScript</span></a>
+      <a href="mobile-chat.html" class="side-item" aria-current="page" style="min-height: 44px; font-size: 15px"><span class="dot dot-debug" aria-hidden="true"></span><span class="t">IndexError in my average</span></a>
+      <span class="side-label">Previous 7 days</span>
+      <a href="chat-practice.html" class="side-item" style="min-height: 44px; font-size: 15px"><span class="dot dot-practice" aria-hidden="true"></span><span class="t">Loop practice: count the vowels</span></a>
+      <a href="#" class="side-item" style="min-height: 44px; font-size: 15px"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">What is a SQL JOIN?</span></a>
+      <a href="#" class="side-item" style="min-height: 44px; font-size: 15px"><span class="dot dot-explain" aria-hidden="true"></span><span class="t">Flexbox vs grid for a navbar</span></a>
+    </div>
+    <div class="side-foot rise d4">
+      <a href="saved.html" class="side-item" style="min-height: 44px; font-size: 15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v16l-5.5-3.8L6.5 20Z"></path></svg><span class="t">Saved explanations</span><span class="count">6</span></a>
+      <a href="settings.html" class="side-item" style="min-height: 44px; font-size: 15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg><span class="t">Settings</span></a>
+      <div class="account"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-3)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><span style="font-size: 12.5px; color: var(--text-3)">Private to this browser · no account</span></div>
+    </div>
+  </nav>
+</div>
+</template>
+<script>window.__PROPS__ = {};</script>
+<script src="preview-runtime.js"></script>
+<script>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+window.__mount(Component);
+</script>
+</body>
+</html>
