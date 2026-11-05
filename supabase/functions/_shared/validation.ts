@@ -19,6 +19,13 @@ export const DataDeleteRequestSchema = z.strictObject({
 export const IngestRequestSchema = z.discriminatedUnion('action', [
   z.strictObject({ action: z.literal('embed_pending'), limit: z.number().int().min(1).max(32).optional() }),
   z.strictObject({ action: z.literal('status') }),
+  // Operator retrieval check over the curated corpus (used for the retrieval eval, RAG.md).
+  z.strictObject({
+    action: z.literal('search'),
+    query: z.string().min(1).max(1500),
+    language: z.enum(LANGUAGES).nullable().optional(),
+    k: z.number().int().min(1).max(10).optional(),
+  }),
 ]);
 export type IngestRequest = z.infer<typeof IngestRequestSchema>;
 

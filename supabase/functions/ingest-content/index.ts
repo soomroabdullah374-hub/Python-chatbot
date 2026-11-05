@@ -43,6 +43,30 @@ Deno.serve(async (req) => {
       return Response.json({ documents: byStatus, pending_chunks: await countPending() }, { headers });
     }
 
+    if (parsed.data.action === 'search') {
+      embedder ??= new Supabase.ai.Session('gte-small');
+      const vector = Array.from((await embedder.run(parsed.data.query, { mean_pool: true, normalize: true })) as ArrayLike<number>);
+      const { data: matches, error: searchError } = await admin.rpc('match_document_chunks', {
+        query_embedding: JSON.stringify(vector),
+        match_count: parsed.data.k ?? 5,
+        min_similarity: 0,
+        language_filter: parsed.data.language ?? null,
+        p_embedding_version: EMBEDDING_VERSION,
+      });
+      if (searchError) throw new Error('search failed');
+      return Response.json(
+        {
+          matches: (matches ?? []).map((m: { title: string; heading: string | null; programming_language: string; similarity: number }) => ({
+            title: m.title,
+            heading: m.heading,
+            language: m.programming_language,
+            similarity: Math.round(m.similarity * 1000) / 1000,
+          })),
+        },
+        { headers },
+      );
+    }
+
     const limit = parsed.data.limit ?? 16;
     const { data: chunks, error } = await admin
       .from('document_chunks')

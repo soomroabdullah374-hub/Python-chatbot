@@ -1,0 +1,194 @@
+{
+  "description": "Retrieval eval set (RAG.md). expected = lesson slugs that should rank in the top 4; [] = off-topic, nothing should pass the threshold.",
+  "cases": [
+    {
+      "id": 1,
+      "query": "What is a variable in Python?",
+      "language": "python",
+      "expected": [
+        "python-variables"
+      ]
+    },
+    {
+      "id": 2,
+      "query": "When should I use let instead of const?",
+      "language": "javascript",
+      "expected": [
+        "js-let-const-var"
+      ]
+    },
+    {
+      "id": 3,
+      "query": "Why do I get IndexError: list index out of range in my loop?",
+      "language": "python",
+      "expected": [
+        "python-lists",
+        "python-for-loops",
+        "python-reading-errors"
+      ]
+    },
+    {
+      "id": 4,
+      "query": "How does range work in a for loop?",
+      "language": "python",
+      "expected": [
+        "python-for-loops"
+      ]
+    },
+    {
+      "id": 5,
+      "query": "my if letter == \"a\" or \"e\" condition is always true",
+      "language": "python",
+      "expected": [
+        "python-conditions"
+      ]
+    },
+    {
+      "id": 6,
+      "query": "What is the difference between return and print?",
+      "language": "python",
+      "expected": [
+        "python-functions"
+      ]
+    },
+    {
+      "id": 7,
+      "query": "How do I loop over the keys and values of a dictionary?",
+      "language": "python",
+      "expected": [
+        "python-dictionaries"
+      ]
+    },
+    {
+      "id": 8,
+      "query": "How do f-strings work?",
+      "language": "python",
+      "expected": [
+        "python-strings"
+      ]
+    },
+    {
+      "id": 9,
+      "query": "TypeError: Assignment to constant variable",
+      "language": "javascript",
+      "expected": [
+        "js-let-const-var"
+      ]
+    },
+    {
+      "id": 10,
+      "query": "my arrow function returns undefined",
+      "language": "javascript",
+      "expected": [
+        "js-functions"
+      ]
+    },
+    {
+      "id": 11,
+      "query": "What is the difference between == and ===?",
+      "language": "javascript",
+      "expected": [
+        "js-equality-and-errors"
+      ]
+    },
+    {
+      "id": 12,
+      "query": "How do I loop through an array?",
+      "language": "javascript",
+      "expected": [
+        "js-arrays-loops"
+      ]
+    },
+    {
+      "id": 13,
+      "query": "What does TypeScript add to JavaScript?",
+      "language": "typescript",
+      "expected": [
+        "ts-basics"
+      ]
+    },
+    {
+      "id": 14,
+      "query": "How do I make a property optional in an interface?",
+      "language": "typescript",
+      "expected": [
+        "ts-object-types"
+      ]
+    },
+    {
+      "id": 15,
+      "query": "Explain this SQL query line by line: SELECT name FROM students WHERE score > 50 ORDER BY score",
+      "language": "sql",
+      "expected": [
+        "sql-select-basics"
+      ]
+    },
+    {
+      "id": 16,
+      "query": "INNER JOIN vs LEFT JOIN",
+      "language": "sql",
+      "expected": [
+        "sql-joins"
+      ]
+    },
+    {
+      "id": 17,
+      "query": "What is the difference between WHERE and HAVING?",
+      "language": "sql",
+      "expected": [
+        "sql-aggregates"
+      ]
+    },
+    {
+      "id": 18,
+      "query": "justify-content vs align-items in flexbox",
+      "language": "html_css",
+      "expected": [
+        "css-flexbox-grid"
+      ]
+    },
+    {
+      "id": 19,
+      "query": "margin vs padding",
+      "language": "html_css",
+      "expected": [
+        "css-box-model"
+      ]
+    },
+    {
+      "id": 20,
+      "query": "Which HTML tags should I use for page structure?",
+      "language": "html_css",
+      "expected": [
+        "html-structure"
+      ]
+    },
+    {
+      "id": 21,
+      "query": "How do I start debugging when my program crashes?",
+      "language": "python",
+      "expected": [
+        "general-debugging",
+        "python-reading-errors"
+      ]
+    },
+    {
+      "id": 22,
+      "query": "How do I bake sourdough bread?",
+      "language": "python",
+      "expected": []
+    },
+    {
+      "id": 23,
+      "query": "What is the capital of France?",
+      "language": null,
+      "expected": []
+    },
+    {
+      "id": 24,
+      "query": "Write a poem about the ocean",
+      "language": "javascript",
+      "expected": []
+    }
+  ]
+}
