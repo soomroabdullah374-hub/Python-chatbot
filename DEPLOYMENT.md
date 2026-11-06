@@ -8,8 +8,8 @@ are in docs/DECISIONS.md.
 |---|---|
 | Supabase project | `codebloom`, ref `vxwexuiimetzkdpaakzv`, Postgres 17 |
 | Migrations | `supabase/migrations/20261105000100…0800` (applied) |
-| Auth | **Anonymous Sign-ins must be ON** (currently off, so the app cannot open a session). Turn the Email provider off. CAPTCHA once a Turnstile site exists |
-| Edge Functions | `chat`, `data-delete`, `ingest-content` (all `verify_jwt = false`; each verifies the caller itself). Deploy the single-file bundles from `npm run functions:bundle` (`supabase/functions/.dist/<name>/index.ts`) or `supabase functions deploy <name>` |
+| Auth | Anonymous Sign-ins is currently **off**, so learners get sessions from the `session` fallback function (DECISIONS D13), which needs the Email provider on. Target state: Anonymous Sign-ins on, then `session_fallback_enabled = false`, then Email provider off. CAPTCHA once a Turnstile site exists |
+| Edge Functions | `chat`, `data-delete`, `ingest-content`, `session` (all `verify_jwt = false`; each checks its caller itself, and `session` is rate-limited per hashed IP and globally). Deploy the single-file bundles from `npm run functions:bundle` (`supabase/functions/.dist/<name>/index.ts`) or `supabase functions deploy <name>` |
 | Secrets | Supabase Vault: `groq_api_key`, `ip_hash_salt`, `operator_token`, read through the service-only RPC `get_runtime_config()`. Edge Function secrets `GROQ_API_KEY` / `XAI_API_KEY` / `IP_HASH_SALT` override them if set |
 | Runtime config | `private.app_config`: `allowed_origins`, `generation_enabled` (kill switch), per-learner, per-IP and global limits, `global_daily_budget_usd`, `anon_retention_days` = 90, `model_prices` |
 | Scheduled jobs | pg_cron: `codebloom-reconcile-turns` (every minute), `codebloom-purge-inactive` (03:17 UTC), `codebloom-purge-usage` (03:29 UTC) |

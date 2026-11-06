@@ -96,3 +96,29 @@ environment variables still override them. No secret is ever placed in a `NEXT_P
 - Inactivity retention: **90 days** (user decision), enforced by `codebloom-purge-inactive`.
 - Still placeholders, kept visible until the user supplies values: provider and backup retention,
   Terms link, Contact email.
+
+## D13 · Server-side fallback for the silent anonymous session
+- **Problem:** Supabase Auth's "Anonymous Sign-ins" is off on the hosted project, so every visitor got
+  `422 anonymous_provider_disabled` and the "We couldn't restore your private session" banner. The tools
+  available here can't change Auth settings, and the user chose not to share a Supabase access token, then
+  asked for the best fix for the project.
+- **Built:** the browser still calls the native `signInAnonymously()` first. Only on that specific
+  refusal does it call the new `session` Edge Function (`_shared/session-handler.ts`), which:
+  - reserves a slot under per-IP (10/hour, HMAC-hashed buckets) and global (500/hour) limits;
+  - creates a user with a throwaway `<uuid>@anon.codebloom.invalid` address and random password, and
+    signs in once;
+  - calls `finish_fallback_session()` to remove the email, password and email identity and set
+    `is_anonymous = true`;
+  - refreshes the session, so the returned token carries `is_anonymous: true`, and the browser adopts it
+    with `setSession()`.
+  If any step fails, the half-made user is deleted.
+- **Why this fits the spec:** learners still see no login and give no personal data, and each browser
+  gets its own private, RLS-scoped user that is a real anonymous user in Supabase Auth. "Delete all my
+  data" and the 90-day purge handle it like any other user (pgTAP 91–98, e2e journey 8, live smoke).
+- **Trade-offs:** it relies on the Email provider staying enabled, which only the server uses. A first
+  visit takes about 4 s (four Auth round trips instead of one). All fallback sign-ins reach Supabase Auth
+  from the function's network, so Supabase's per-IP sign-in rate limit applies to all of them together;
+  that's fine at current traffic.
+- **Exit path:** turn on Anonymous Sign-ins in the dashboard. The browser then never calls the fallback.
+  After that, `update private.app_config set session_fallback_enabled = false;` and disabling the Email
+  provider complete the original setup.

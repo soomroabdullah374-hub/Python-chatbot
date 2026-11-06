@@ -15,7 +15,7 @@ Hosted backend: Supabase project `codebloom` (ref `vxwexuiimetzkdpaakzv`, Postgr
 | 4 Frontend: landing, onboarding, chat, saved, settings | ✅ Done — matches `design/`; axe clean at 1440 and 390 |
 | 5 Content: approved corpus, embeddings, retrieval eval | ✅ Done — 21 lessons / 52 chunks published; recall@1 21/21 |
 | 6 Testing: unit, DB, e2e, a11y, visual | ✅ Done (live chat smoke blocked, see Open items) |
-| 7 Release: Vercel deploy, live smoke | 🟡 Deployed to **https://codebloom-lac.vercel.app**; live chat waits on Anonymous Sign-ins (Open item 1) |
+| 7 Release: Vercel deploy, live smoke | ✅ Live at **https://codebloom-lac.vercel.app**; live smoke passes (sessions via the D13 fallback while Anonymous Sign-ins is off) |
 
 ## Verification log (2026-11-06, commit `056dbf8` + docs)
 
@@ -23,17 +23,18 @@ Hosted backend: Supabase project `codebloom` (ref `vxwexuiimetzkdpaakzv`, Postgr
 |---|---|---|
 | Lint | `npx eslint .` | 0 problems |
 | Types | `npx tsc --noEmit` | 0 errors |
-| Unit tests | `npm test` (vitest) | 6 files, **72/72 passed** (SSE parser incl. split UTF-8/CRLF/multi-event, provider adapters incl. the recorded Groq stream, validation + hashing, prompts + citations, chat handler lifecycle incl. cancel/timeout/fallback/save failure, answer parser) |
+| Unit tests | `npm test` (vitest) | 7 files, **79/79 passed** (session fallback handler: CORS, limits, credential scrub, cleanup on failure; SSE parser incl. split UTF-8/CRLF/multi-event, provider adapters incl. the recorded Groq stream, validation + hashing, prompts + citations, chat handler lifecycle incl. cancel/timeout/fallback/save failure, answer parser) |
 | Edge Function types | `npm run typecheck:functions` (deno 2.9.6) | exit 0 for chat, data-delete, ingest-content |
 | Production build | `npx next build` | compiled; `/` static, `/chat/[[...conversationId]]`, `/onboarding`, `/saved`, `/settings` dynamic; Proxy active |
 | Client bundle secret scan | `npm run check:bundle-secrets` | OK, 108 files, no provider keys, secret keys or service-role JWTs |
-| DB authorization (pgTAP) | runner `supabase/tests/.generated/authorization.run.sql` executed in the hosted DB (fetched from GitHub at `056dbf8`; ends in a raise, so every fixture rolls back) | **90/90 ok**: RLS isolation between two anonymous learners, anon denied, no forged assistant messages, private usage/deletion tables unreadable, service-only RPCs not learner-callable, idempotent reservations, concurrency + per-minute + per-IP + kill-switch limits, late completion after delete rejected, lease reconciliation, delete-all and delete-my-data cascades, 90-day inactivity purge |
-| E2E journeys | `npm run test:e2e` (Playwright, production build + `tests/e2e/fake-supabase.mjs`) | **9/9 passed** (TESTING.md journeys 1–7, incl. stop → interrupted → retry, refresh mid-answer, second-browser isolation, cleared cookies, delete all / delete my data, route audit `/login` `/signup` `/sign-in` `/auth/callback` `/auth/login` → 404) |
+| DB authorization (pgTAP) | runner `supabase/tests/.generated/authorization.run.sql` executed in the hosted DB (fetched from GitHub at `5dd05fd`; ends in a raise, so every fixture rolls back) | **98/98 ok**: fallback sessions (learners can't call the RPCs, per-IP hourly cap, the credential scrub only touches fallback users, off switch);  RLS isolation between two anonymous learners, anon denied, no forged assistant messages, private usage/deletion tables unreadable, service-only RPCs not learner-callable, idempotent reservations, concurrency + per-minute + per-IP + kill-switch limits, late completion after delete rejected, lease reconciliation, delete-all and delete-my-data cascades, 90-day inactivity purge |
+| E2E journeys | `npm run test:e2e` (Playwright, production build + `tests/e2e/fake-supabase.mjs`) | **10/10 passed** (TESTING.md journeys 1–7 plus journey 8: anonymous sign-ins switched off → fallback session, incl. stop → interrupted → retry, refresh mid-answer, second-browser isolation, cleared cookies, delete all / delete my data, route audit `/login` `/signup` `/sign-in` `/auth/callback` `/auth/login` → 404) |
 | Accessibility + visual | same run, `tests/e2e/a11y-visual.spec.ts` | **6/6 passed**: axe WCAG 2.1 A/AA on landing, onboarding, 404, chat new/explain/debug/practice, saved, settings, mobile drawer at 1440 and 390 — **0 violations of any impact**. Screenshots in `test-results/screens/` reviewed against `design/screenshots/` |
 | Retrieval eval | `ingest-content` `search` action (docs/evals/retrieval-2026-11-05.md) | recall@1 21/21; on-topic ≥ 0.859, off-topic ≤ 0.733; threshold 0.80 |
 | Live function checks | `curl` against `https://vxwexuiimetzkdpaakzv.supabase.co/functions/v1/*` | preflight from the Vercel origin → `204` with `access-control-allow-origin`; unknown origin → `403`; `POST /chat` and `POST /data-delete` without a session → `SESSION_REQUIRED` envelope; anon `GET /rest/v1/conversations` → `42501 permission denied` |
 | Deployed code = source | `get_edge_function chat` vs `npm run functions:bundle` | chat v1 matches the current bundle (it lacks only the operator-only ingest `search` schema, which chat doesn't use); ingest-content v2 includes `search`; data-delete v1 unchanged since deploy |
 | Vercel production | `vercel deploy --prod` (CLI 65.12.1, project `codebloom`, Node 22.x) | READY at https://codebloom-lac.vercel.app (also `codebloom-soomroabdullah374-8901s-projects.vercel.app`). Public: `/`, `/onboarding`, `/chat`, `/saved`, `/settings` → 200; `/login`, `/signup`, `/auth/callback`, unknown → 404; CSP + `X-Frame-Options: DENY` + `nosniff` + referrer/permissions policies present; `/chat` is `no-store`. In Chromium the landing renders and `/chat` calls Supabase, gets `422 anonymous_provider_disabled`, and shows the reconnect banner (expected until Open item 1). CORS preflight from the production origin → 204 |
+| Live smoke | `npm run smoke:live` against https://codebloom-lac.vercel.app (one real Groq request) | **5/5 ok**: landing → onboarding with no login → real streamed answer saved (906 chars, Explain · Python) → reload keeps it → second browser gets "couldn't find that conversation" → Delete all my data → fresh workspace. Server side: fallback users have no email/password and `is_anonymous = true`; both deletion jobs `completed` |
 | Security advisors | Supabase advisors (security) | INFO ×4: RLS without policies on `private.*` service tables (intended deny-all). WARN ×9: learner RPCs are `SECURITY DEFINER` (intended, see DECISIONS D3). No other findings |
 
 Fixes made because of these checks: code blocks lost their "Copied" state on any re-render (Markdown
@@ -43,19 +44,16 @@ chat column was 12px narrower than the design; three pgTAP assertions assumed an
 
 ## Open items
 
-1. **Turn on Anonymous Sign-ins** (Supabase → Authentication → Sign In / Providers → "Allow anonymous
-   sign-ins"). Until then the app opens to "We couldn't restore your private session": `POST /auth/v1/signup`
-   returns `422 anonymous_provider_disabled`. Recommended while there: turn off the Email provider
-   (there is no email login).
+1. **Optional: turn on Anonymous Sign-ins** (Supabase → Authentication → Sign In / Providers). The app
+   works without it through the D13 fallback; the native path is faster (one request) and lets you then
+   set `session_fallback_enabled = false` and turn off the Email provider.
 2. **Automatic deploys from GitHub.** The Vercel project isn't linked to the repo, because the Vercel
    GitHub app can't see `Python-chatbot` (DECISIONS D11). Give it access on GitHub
    (Settings → Applications → Vercel → Repository access), then run `vercel git connect` or link the repo
    under Project → Settings → Git. Until then, redeploy with `vercel deploy --prod`.
    **Revoke the Vercel token that was pasted in chat** once this is set up.
-3. **Live chat smoke test** (TESTING.md "Live smoke"): `npm run smoke:live` (`tests/live/smoke.mjs`) runs
-   landing → onboarding → one short real question → reload → second-browser isolation → delete my data
-   against https://codebloom-lac.vercel.app. Current result: stops at step 1 with
-   `no anonymous session: POST /auth/v1/signup → 422` until item 1 is done.
+3. **Live smoke test:** passing (`npm run smoke:live`, see the verification log). Re-run it after any
+   deploy.
 4. **Rotate the Groq key.** It was pasted into a chat. After rotating, update Vault:
    `select vault.update_secret((select id from vault.secrets where name = 'groq_api_key'), '<new key>');`
 5. **Placeholders still visible by design:** `[PROVIDER & BACKUP RETENTION — confirm before launch]`,
@@ -73,16 +71,16 @@ this table is the evidence record.
 
 | Criterion | Status | Evidence / gap |
 |---|---|---|
-| First visit reaches a streamed answer with no sign-up/login | Partial | E2E journeys 1–3 (fake backend, no login screen at any step). Live site deployed; Blocked on Anonymous Sign-ins |
-| Answers the actual question | Partial | Prompt contract and adapter tests; a live Groq stream was recorded during the build. Needs the live smoke + tutor eval |
+| First visit reaches a streamed answer with no sign-up/login | Met | E2E journeys 1–3 and 8; live smoke on the production site |
+| Answers the actual question | Partial | Live smoke: "What is a variable in Python?" got a correct structured answer. Tutor eval still needed |
 | Explain / Debug / Practice behave differently | Met | E2E journey 3 + screenshots: section layouts, "Not executed" label, progressive hints, hidden solution |
 | Never claims code execution | Partial | System prompt rule 8; "Not executed" badges. Tutor eval not run |
 | History survives reload; rename and delete work | Met | E2E 3, 3b, 3c; pgTAP 57–58, 64–65 |
 | No login/sign-up/auth routes or UI | Met | E2E route audit (404 ×5) + journey 1 text check |
-| Silent anonymous session (Turnstile in prod) | Partial | Silent session verified in E2E; Turnstile not configured (D9) |
-| Only anonymous sign-ins enabled | **Blocked** | Hosted project: anonymous **off**, email **on**. Dashboard step |
+| Silent anonymous session (Turnstile in prod) | Partial | Silent session verified live (via the D13 fallback while the native switch is off); Turnstile not configured (D9) |
+| Only anonymous sign-ins enabled | Partial | Learners only ever get anonymous users (D13). The hosted switch is still off and email still on; dashboard step to finish |
 | Two browsers isolated; cleared cookies → fresh workspace | Met | E2E 4 and 5; pgTAP 59–66 |
-| Delete all my data → data + auth user removed, fresh session | Partial | pgTAP 86–88 (deletion job, generation blocked, cascade); E2E 6 (fake backend). Live run blocked |
+| Delete all my data → data + auth user removed, fresh session | Met | pgTAP 86–88; E2E 6; live smoke step 5 + direct live call (job `completed`) |
 | Inactive data purged after the disclosed period | Met | pgTAP 89–90; cron `codebloom-purge-inactive`; 90 days disclosed on landing + settings |
 | Matches design/ | Met | Screenshot review vs design/screenshots at 1440/390 (fixes listed above) |
 | Every component state from components.html | Partial | `design/cb.css` ported verbatim (hover/focus/disabled/error rules); not audited state by state |
@@ -117,11 +115,11 @@ this table is the evidence record.
 | Field | Value |
 |---|---|
 | Commit | branch `claude/pensive-feynman-6jal84` (see `git log`) |
-| Migrations | `20261105000800_content_upsert` (latest applied) |
+| Migrations | `20261106000100_session_fallback` (latest applied) |
 | Model | `openai/gpt-oss-120b` on Groq, fallback `openai/gpt-oss-20b`, `reasoning_effort=low` |
 | Prompt version | `codebloom-tutor-v1` |
 | Embeddings | `gte-small-384-v1` |
 | Corpus | manifest v1: 21 documents, 52 chunks, all embedded and published |
-| Tests | unit 72/72 · pgTAP 90/90 · e2e 9/9 · a11y/visual 6/6 · retrieval 21/21 |
+| Tests | unit 79/79 · pgTAP 98/98 · e2e 10/10 · a11y/visual 6/6 · retrieval 21/21 · live smoke 5/5 |
 | Known limitations | Open items 1–6 above |
 | Approver / date | — (pending the user) |

@@ -32,8 +32,9 @@ Built end to end and tested; see [docs/PROGRESS.md](docs/PROGRESS.md) for every 
   RLS on every table, pg_cron maintenance, Edge Functions `chat`, `data-delete` and `ingest-content`, and
   21 published lessons (52 embedded chunks).
 - **Frontend (live):** https://codebloom-lac.vercel.app (Vercel project `codebloom`).
-- **Before learners can use it:** turn on *Anonymous Sign-ins* in the Supabase dashboard
-  (Authentication → Sign In / Providers).
+- **Sessions:** learners get a silent anonymous session. Because the project's *Anonymous Sign-ins* switch
+  is off, sessions currently come from the server-side fallback (docs/DECISIONS.md D13). Turning the
+  switch on makes the native path take over automatically.
 
 ## Run it locally
 ```bash
@@ -49,6 +50,7 @@ npm run lint && npm run typecheck && npm test        # ESLint, tsc, Vitest (72 t
 npm run typecheck:functions                          # deno check for the Edge Functions
 npm run build && npm run check:bundle-secrets        # production build + client-bundle secret scan
 npm run test:e2e                                     # Playwright journeys + axe + screenshots (fake backend)
+npm run smoke:live                                   # live smoke on production (one real model request)
 npm run db:tests:build                               # regenerates supabase/tests/.generated/authorization.run.sql
 ```
 The pgTAP suite runs with `supabase test db` locally. Against a hosted project, paste the generated runner
