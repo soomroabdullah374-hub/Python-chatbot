@@ -11,7 +11,7 @@ A beginner-friendly programming tutor that explains concepts, reads code, diagno
 | Identity | Supabase **Anonymous Sign-ins** via `@supabase/ssr` — no login UI, no email/password, no OAuth |
 | Backend | Supabase Edge Functions |
 | Database / vectors | Supabase Postgres + pgvector |
-| Generation | xAI Grok API (key stored ONLY in Edge Function secrets) |
+| Generation | Groq (`openai/gpt-oss-120b`, fallback `openai/gpt-oss-20b`); xAI Grok adapter kept behind `LLM_PROVIDER=xai`. Keys stay server-side only (Supabase Vault / Edge Function secrets) |
 | Embeddings | Supabase-native gte-small (384 dims), subject to benchmarking |
 | Abuse protection | Cloudflare Turnstile (invisible) on anonymous session creation, per-session and per-IP quotas, global spend pause |
 
@@ -24,23 +24,66 @@ Python, JavaScript, TypeScript, SQL, HTML/CSS. English first; Roman Urdu optiona
 ## Out of scope for v1
 Accounts of any kind (sign-up, login, password, email, OAuth, magic link), cross-device sync, code execution, user uploads, autonomous browsing, voice, billing, classrooms, public share links, fine-tuning.
 
-## Package contents
+## Status
+Built end to end and tested; see [docs/PROGRESS.md](docs/PROGRESS.md) for every check and its result and
+[docs/DECISIONS.md](docs/DECISIONS.md) for where the build deviates from the spec and why.
+
+- **Backend (live):** Supabase project `codebloom` (`https://vxwexuiimetzkdpaakzv.supabase.co`): 8 migrations,
+  RLS on every table, pg_cron maintenance, Edge Functions `chat`, `data-delete` and `ingest-content`, and
+  21 published lessons (52 embedded chunks).
+- **Frontend:** this Next.js app. It's ready to import on Vercel with no settings; see "Deploy to Vercel".
+- **Before learners can use it:** turn on *Anonymous Sign-ins* in the Supabase dashboard
+  (Authentication → Sign In / Providers).
+
+## Run it locally
+```bash
+npm ci
+cp .env.example .env.local   # fill in the Supabase URL + publishable key (public values)
+npm run dev                  # http://localhost:3000
+```
+Add `http://localhost:3000` to `private.app_config.allowed_origins` if it isn't there (it is by default).
+
+## Checks
+```bash
+npm run lint && npm run typecheck && npm test        # ESLint, tsc, Vitest (72 tests)
+npm run typecheck:functions                          # deno check for the Edge Functions
+npm run build && npm run check:bundle-secrets        # production build + client-bundle secret scan
+npm run test:e2e                                     # Playwright journeys + axe + screenshots (fake backend)
+npm run db:tests:build                               # regenerates supabase/tests/.generated/authorization.run.sql
+```
+The pgTAP suite runs with `supabase test db` locally. Against a hosted project, paste the generated runner
+into the SQL editor: it finishes by raising its TAP output, which rolls every fixture back.
+
+## Deploy to Vercel
+1. On vercel.com, choose **Add New → Project** and import `soomroabdullah374-hub/Python-chatbot`. If the
+   repo isn't listed, give the Vercel GitHub app access to it.
+2. Keep the defaults (framework Next.js, root `./`) and click **Deploy**. No environment variables are
+   needed: `.env.production` carries the public Supabase URL and publishable key, and Vercel variables
+   override it if set.
+3. If the production URL isn't `https://python-chatbot-soomroabdullah374-8901s-projects.vercel.app` (or
+   `codebloom-…`), allow it for the Edge Functions (the functions pick it up within 60 s):
+   ```sql
+   update private.app_config set allowed_origins = array_append(allowed_origins, 'https://<your-domain>');
+   ```
+
+## Repository layout
 | Path | What it is |
 |---|---|
-| `CLAUDE.md` | Entry point for Claude Code (imports AGENTS.md) |
-| `BUILD_PROMPT.md` | Copy-paste kickoff prompt for an end-to-end build |
-| `PRD.md` … `ACCEPTANCE_CRITERIA.md` | Specification (reading order below) |
-| `IDENTITY.md` | The no-login identity model (anonymous sessions) |
-| `design/` | Stylesheet, tokens, interactive HTML previews, screenshots, canvas sources |
-| `.env.example`, `supabase/functions/.env.example` | Environment templates (no secrets) |
-| `CHANGELOG.md` | What changed from the previous spec package |
-
-## Build it with Claude Code
-Unzip, `cd codebloom`, run `claude`, and paste the prompt in [BUILD_PROMPT.md](BUILD_PROMPT.md). This folder is the starting repository.
+| `src/app` | Routes: `/` landing, `/onboarding`, `/chat/[[...conversationId]]`, `/saved`, `/settings`, 404 |
+| `src/components` | Chat (composer, answers, learning panel), shell/sidebar, UI primitives |
+| `src/lib` | Supabase client, silent anonymous session, data access, SSE chat client, answer parser |
+| `supabase/migrations` | Schema, RLS + grants, RPCs, cron, Vault-backed config |
+| `supabase/functions` | Edge Functions + `_shared` (prompts, providers, SSE, validation, CORS) |
+| `supabase/tests` | pgTAP authorization suite (+ generated SQL runner) |
+| `content/` | Original lessons, corpus builder output, retrieval eval set |
+| `tests/` | Unit (Vitest), e2e/a11y/visual (Playwright) with a local fake backend |
+| `design/` | Visual source of truth (previews, screenshots, tokens) |
+| `docs/` | Progress log, decisions, evaluations |
 
 ## Reading order
 PRD → IDENTITY → Design (+ design/README) → appflow → TRD → ARCHITECTURE → DATABASE → API → RAG → PROMPTS → SECURITY → TESTING → DEPLOYMENT → IMPLEMENTATION_PLAN → ACCEPTANCE_CRITERIA
 
 ## Boundaries
-This package is specification and design only. No application code was generated, deployed, tested or security-audited. The HTML previews are static design references, not app code.
-Never commit real credentials. Never expose the xAI key via `NEXT_PUBLIC_` variables.
+Never commit real credentials. Never expose a provider key (Groq or xAI) through `NEXT_PUBLIC_` variables.
+The HTML previews in `design/` are static design references, not app code. Not done yet: a Turnstile
+site, monitoring, load and abuse drills, and the human-reviewed tutor evaluation (see docs/PROGRESS.md).

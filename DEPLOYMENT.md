@@ -1,5 +1,24 @@
 # CodeBloom Deployment Runbook
 
+## As built (2026-11)
+The runbook below is the original plan. This is what the hosted setup actually looks like; the reasons
+are in docs/DECISIONS.md.
+
+| Piece | As built |
+|---|---|
+| Supabase project | `codebloom`, ref `vxwexuiimetzkdpaakzv`, Postgres 17 |
+| Migrations | `supabase/migrations/20261105000100…0800` (applied) |
+| Auth | **Anonymous Sign-ins must be ON** (currently off, so the app cannot open a session). Turn the Email provider off. CAPTCHA once a Turnstile site exists |
+| Edge Functions | `chat`, `data-delete`, `ingest-content` (all `verify_jwt = false`; each verifies the caller itself). Deploy the single-file bundles from `npm run functions:bundle` (`supabase/functions/.dist/<name>/index.ts`) or `supabase functions deploy <name>` |
+| Secrets | Supabase Vault: `groq_api_key`, `ip_hash_salt`, `operator_token`, read through the service-only RPC `get_runtime_config()`. Edge Function secrets `GROQ_API_KEY` / `XAI_API_KEY` / `IP_HASH_SALT` override them if set |
+| Runtime config | `private.app_config`: `allowed_origins`, `generation_enabled` (kill switch), per-learner, per-IP and global limits, `global_daily_budget_usd`, `anon_retention_days` = 90, `model_prices` |
+| Scheduled jobs | pg_cron: `codebloom-reconcile-turns` (every minute), `codebloom-purge-inactive` (03:17 UTC), `codebloom-purge-usage` (03:29 UTC) |
+| Content | `npm run content:build` → `content/corpus.json`; ingest + embed with the operator-only `ingest-content` (`embed_pending` in batches of 4) |
+| Frontend | Vercel import of this repo with no settings needed (`.env.production` holds the public values). Add the production origin to `allowed_origins` if it differs from the pre-allowed `python-chatbot-` / `codebloom-soomroabdullah374-8901s-projects.vercel.app` |
+
+Rotate the Groq key: `select vault.update_secret((select id from vault.secrets where name = 'groq_api_key'), '<new key>');`
+Pause generation: `update private.app_config set generation_enabled = false;`
+
 ## Environments
 Local, staging, production, with separate Supabase projects, Turnstile widgets and xAI keys where practical.
 
