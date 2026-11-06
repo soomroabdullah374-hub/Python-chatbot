@@ -235,3 +235,21 @@ test('7 · route audit: there are no login, sign-up or auth callback pages', asy
     expect(res.status(), path).toBe(404);
   }
 });
+
+test('8 · with anonymous sign-ins switched off, the server-side fallback still opens a private workspace', async ({ page, request }) => {
+  const control = (anonymousDisabled: boolean) => request.post('http://localhost:54399/__control', { data: { anonymousDisabled } });
+  await control(true);
+  try {
+    const refused = page.waitForResponse((r) => r.url().endsWith('/auth/v1/signup') && r.status() === 422);
+    const fallback = page.waitForResponse((r) => r.url().endsWith('/functions/v1/session') && r.request().method() === 'POST');
+    await openChat(page);
+    await refused;
+    expect((await fallback).status()).toBe(200);
+    await ask(page, 'What is a variable in Python?');
+    await waitForAnswer(page, 1);
+    await page.reload();
+    await waitForAnswer(page, 1); // the adopted session persists across reloads
+  } finally {
+    await control(false);
+  }
+});

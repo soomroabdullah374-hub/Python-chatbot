@@ -1,9 +1,40 @@
 'use client';
 // Silent anonymous identity (IDENTITY.md): no login UI, no credentials the learner ever sees.
-import type { Session } from '@supabase/supabase-js';
+import type { AuthError, Session, SupabaseClient } from '@supabase/supabase-js';
+import { env, functionsUrl } from '@/lib/env';
 import { getSupabase } from '@/lib/supabase/client';
 import { getCaptchaToken } from '@/lib/turnstile';
 import { ClientError } from './errors';
+
+/** Supabase Auth refuses native anonymous sign-ins when the dashboard switch is off. */
+function anonymousSignInsOff(error: AuthError | null): boolean {
+  return Boolean(error && (error.code === 'anonymous_provider_disabled' || /anonymous sign-ins are disabled/i.test(error.message)));
+}
+
+/**
+ * Server-side fallback (DECISIONS D13): the `session` Edge Function creates the same kind of
+ * anonymous user (no email, no password) and returns its session, which we adopt locally.
+ */
+async function fallbackSession(supabase: SupabaseClient): Promise<Session> {
+  let res: Response;
+  try {
+    res = await fetch(`${functionsUrl}/session`, {
+      method: 'POST',
+      headers: { apikey: env.supabaseKey, 'Content-Type': 'application/json' },
+      body: '{}',
+      cache: 'no-store',
+    });
+  } catch {
+    throw new ClientError('NETWORK');
+  }
+  const body = await res.json().catch(() => null);
+  if (!res.ok || typeof body?.access_token !== 'string' || typeof body?.refresh_token !== 'string') {
+    throw new ClientError('SESSION_REQUIRED', { detail: typeof body?.error?.code === 'string' ? body.error.code : `session ${res.status}` });
+  }
+  const { data, error } = await supabase.auth.setSession({ access_token: body.access_token, refresh_token: body.refresh_token });
+  if (error || !data.session) throw new ClientError('SESSION_REQUIRED', { detail: error?.message });
+  return data.session;
+}
 
 let inflight: Promise<Session> | null = null;
 
@@ -20,8 +51,9 @@ export function ensureSession(): Promise<Session> {
       throw new ClientError('SESSION_REQUIRED');
     }
     const { data: signIn, error } = await supabase.auth.signInAnonymously({ options: { captchaToken } });
-    if (error || !signIn.session) throw new ClientError('SESSION_REQUIRED', { detail: error?.message });
-    return signIn.session;
+    if (signIn.session) return signIn.session;
+    if (anonymousSignInsOff(error)) return fallbackSession(supabase);
+    throw new ClientError('SESSION_REQUIRED', { detail: error?.message });
   })().finally(() => {
     inflight = null;
   });

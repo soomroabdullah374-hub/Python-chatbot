@@ -2,7 +2,7 @@
 -- or through `npm run db:tests:build` for environments without the CLI (see scripts/build-db-tests.mjs).
 -- Two anonymous learners (U1, U2), one stale anonymous learner (U3) and the `anon` role.
 begin;
-select plan(90);
+select plan(98);
 
 insert into auth.users (id, instance_id, aud, role, is_anonymous, created_at, updated_at, raw_app_meta_data, raw_user_meta_data) values
   ('11111111-1111-4111-8111-111111111111', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', true, now(), now(), '{}', '{}'),
@@ -151,6 +151,25 @@ select is((select count(*)::int from public.conversations where user_id = '22222
 update public.profiles set last_active_at = now() - interval '200 days' where id = '33333333-3333-4333-8333-333333333333';
 select is(private.purge_inactive_anonymous_users(), 1, 'inactive anonymous learners are purged after the retention period');
 select is((select count(*)::int from public.profiles where id = '33333333-3333-4333-8333-333333333333'), 0, 'purge cascades to app data');
+
+-- Session fallback while Anonymous Sign-ins is off (DECISIONS D13)
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"11111111-1111-4111-8111-111111111111","role":"authenticated","is_anonymous":true}';
+select throws_ok($q$select public.reserve_session_slot('pgtap')$q$, '42501', null, 'learners cannot reserve fallback sessions');
+select throws_ok($q$select public.finish_fallback_session('11111111-1111-4111-8111-111111111111')$q$, '42501', null, 'learners cannot call the credential scrub');
+reset role;
+update private.app_config set max_sessions_per_ip_per_hour = 2;
+set local role service_role;
+select is((public.reserve_session_slot('pgtap-bucket') ->> 'status'), 'ok', 'first fallback session from a network is allowed');
+select is((public.reserve_session_slot('pgtap-bucket') ->> 'status'), 'ok', 'second fallback session from a network is allowed');
+select is((public.reserve_session_slot('pgtap-bucket') ->> 'code'), 'RATE_LIMITED', 'per-IP hourly cap applies to fallback sessions');
+select is((public.reserve_session_slot('pgtap-other-bucket') ->> 'status'), 'ok', 'another network is unaffected by that cap');
+select is(public.finish_fallback_session('11111111-1111-4111-8111-111111111111'), false, 'the credential scrub ignores users without a fallback address');
+reset role;
+update private.app_config set session_fallback_enabled = false;
+set local role service_role;
+select is((public.reserve_session_slot('pgtap-bucket-2') ->> 'code'), 'SESSION_REQUIRED', 'the fallback can be switched off');
+reset role;
 
 select * from finish();
 rollback;

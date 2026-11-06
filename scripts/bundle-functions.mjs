@@ -9,7 +9,7 @@ import { join } from 'node:path';
 const root = process.cwd();
 const fnDir = join(root, 'supabase', 'functions');
 const imports = JSON.parse(readFileSync(join(fnDir, 'deno.json'), 'utf8')).imports;
-const functions = process.argv.slice(2).length ? process.argv.slice(2) : ['chat', 'data-delete', 'ingest-content'];
+const functions = process.argv.slice(2).length ? process.argv.slice(2) : ['chat', 'data-delete', 'ingest-content', 'session'];
 
 const denoSpecifiers = {
   name: 'deno-specifiers',

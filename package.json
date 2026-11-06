@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "typecheck:functions": "deno check --config supabase/functions/deno.json supabase/functions/chat/index.ts supabase/functions/data-delete/index.ts supabase/functions/ingest-content/index.ts",
+    "typecheck:functions": "deno check --config supabase/functions/deno.json supabase/functions/chat/index.ts supabase/functions/data-delete/index.ts supabase/functions/ingest-content/index.ts supabase/functions/session/index.ts",
     "test": "vitest run",
     "test:e2e": "playwright test --trace off",
     "functions:bundle": "node scripts/bundle-functions.mjs",

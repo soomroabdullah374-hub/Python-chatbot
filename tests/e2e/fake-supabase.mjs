@@ -19,6 +19,8 @@ const feedback = new Map(); // message id -> rating
 const bookmarks = new Map(); // message id -> { user_id, created_at }
 let seq = 0;
 let lastTs = 0;
+// Test switch (POST /__control): imitate Supabase Auth with "Anonymous Sign-ins" turned off.
+let anonymousDisabled = false;
 
 function now() {
   lastTs = Math.max(Date.now(), lastTs + 1);
@@ -566,10 +568,18 @@ const server = createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') return send(req, res, 204);
     if (path === '/health') return send(req, res, 200, { ok: true, users: users.size });
+    if (path === '/__control' && req.method === 'POST') {
+      const body = (await readJson(req)) ?? {};
+      if (typeof body.anonymousDisabled === 'boolean') anonymousDisabled = body.anonymousDisabled;
+      return send(req, res, 200, { anonymousDisabled });
+    }
 
     // --- auth
     if (path === '/auth/v1/signup' && req.method === 'POST') {
       await readJson(req);
+      if (anonymousDisabled) {
+        return send(req, res, 422, { code: 422, error_code: 'anonymous_provider_disabled', msg: 'Anonymous sign-ins are disabled' });
+      }
       return send(req, res, 200, issueSession(createUser()));
     }
     if (path === '/auth/v1/token' && req.method === 'POST') {
@@ -589,6 +599,12 @@ const server = createServer(async (req, res) => {
     if (path === '/auth/v1/settings') return send(req, res, 200, { external: { anonymous_users: true, email: false }, disable_signup: false });
 
     // --- functions
+    if (path === '/functions/v1/session' && req.method === 'POST') {
+      // Server-side fallback session (DECISIONS D13): same shape as a native anonymous session.
+      await readJson(req);
+      const s = issueSession(createUser());
+      return send(req, res, 200, { access_token: s.access_token, refresh_token: s.refresh_token, expires_in: s.expires_in, expires_at: s.expires_at, token_type: 'bearer' });
+    }
     if (path.startsWith('/functions/v1/')) {
       const name = path.slice('/functions/v1/'.length);
       const uid = caller(req);

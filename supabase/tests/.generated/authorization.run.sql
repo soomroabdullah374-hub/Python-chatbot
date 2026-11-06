@@ -16,7 +16,7 @@ end $f$;
 do $runner$
 declare _o text := '';
 begin
-_o := _o || coalesce(pg_temp.tap(1, $s0$select plan(90)$s0$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(1, $s0$select plan(98)$s0$) || chr(10), '');
 _o := _o || coalesce(pg_temp.tap(2, $s1$insert into auth.users (id, instance_id, aud, role, is_anonymous, created_at, updated_at, raw_app_meta_data, raw_user_meta_data) values
   ('11111111-1111-4111-8111-111111111111', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', true, now(), now(), '{}', '{}'),
   ('22222222-2222-4222-8222-222222222222', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', true, now(), now(), '{}', '{}'),
@@ -150,7 +150,24 @@ _o := _o || coalesce(pg_temp.tap(124, $s123$select is((select count(*)::int from
 _o := _o || coalesce(pg_temp.tap(125, $s124$update public.profiles set last_active_at = now() - interval '200 days' where id = '33333333-3333-4333-8333-333333333333'$s124$) || chr(10), '');
 _o := _o || coalesce(pg_temp.tap(126, $s125$select is(private.purge_inactive_anonymous_users(), 1, 'inactive anonymous learners are purged after the retention period')$s125$) || chr(10), '');
 _o := _o || coalesce(pg_temp.tap(127, $s126$select is((select count(*)::int from public.profiles where id = '33333333-3333-4333-8333-333333333333'), 0, 'purge cascades to app data')$s126$) || chr(10), '');
-_o := _o || coalesce(pg_temp.tap(128, $s127$select * from finish()$s127$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(128, $s127$set local role authenticated$s127$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(129, $s128$set local request.jwt.claims = '{"sub":"11111111-1111-4111-8111-111111111111","role":"authenticated","is_anonymous":true}'$s128$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(130, $s129$select throws_ok($q$select public.reserve_session_slot('pgtap')$q$, '42501', null, 'learners cannot reserve fallback sessions')$s129$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(131, $s130$select throws_ok($q$select public.finish_fallback_session('11111111-1111-4111-8111-111111111111')$q$, '42501', null, 'learners cannot call the credential scrub')$s130$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(132, $s131$reset role$s131$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(133, $s132$update private.app_config set max_sessions_per_ip_per_hour = 2$s132$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(134, $s133$set local role service_role$s133$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(135, $s134$select is((public.reserve_session_slot('pgtap-bucket') ->> 'status'), 'ok', 'first fallback session from a network is allowed')$s134$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(136, $s135$select is((public.reserve_session_slot('pgtap-bucket') ->> 'status'), 'ok', 'second fallback session from a network is allowed')$s135$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(137, $s136$select is((public.reserve_session_slot('pgtap-bucket') ->> 'code'), 'RATE_LIMITED', 'per-IP hourly cap applies to fallback sessions')$s136$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(138, $s137$select is((public.reserve_session_slot('pgtap-other-bucket') ->> 'status'), 'ok', 'another network is unaffected by that cap')$s137$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(139, $s138$select is(public.finish_fallback_session('11111111-1111-4111-8111-111111111111'), false, 'the credential scrub ignores users without a fallback address')$s138$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(140, $s139$reset role$s139$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(141, $s140$update private.app_config set session_fallback_enabled = false$s140$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(142, $s141$set local role service_role$s141$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(143, $s142$select is((public.reserve_session_slot('pgtap-bucket-2') ->> 'code'), 'SESSION_REQUIRED', 'the fallback can be switched off')$s142$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(144, $s143$reset role$s143$) || chr(10), '');
+_o := _o || coalesce(pg_temp.tap(145, $s144$select * from finish()$s144$) || chr(10), '');
 raise exception using message = 'TAP-OUTPUT' || chr(10) || _o;
 end
 $runner$;
