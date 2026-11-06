@@ -1,0 +1,26 @@
+/* CodeBloom design tokens (v2). Source of truth for colours, radii, shadows, motion and fonts.
+   Full component styles: design/cb.css. Tailwind mapping: design/README.md. */
+:root{
+  --bg:#FAFAF9;--surface:#FFFFFF;--subtle:#F5F5F4;--sunken:#EFEFEE;
+  --border:#E7E7E5;--border-strong:#D7D7D4;--control:#8B8B93;
+  --text:#17171C;--text-2:#52525B;--text-3:#6B6B74;
+  --primary:#4F46E5;--primary-hover:#4338CA;--primary-press:#3730A3;
+  --primary-soft:#EEF0FF;--primary-soft-2:#E0E4FF;--primary-text:#3730A3;
+  --accent:#F97362;
+  --explain:#4F46E5;--debug:#D97706;--practice:#16A34A;
+  --success:#15803D;--success-soft:#ECFDF3;--success-line:#BBEBCB;
+  --warning:#B45309;--warning-text:#8A4106;--warning-soft:#FFF8EB;--warning-line:#F6DDB0;
+  --danger:#DC2626;--danger-hover:#B91C1C;--danger-text:#B42318;--danger-soft:#FEF3F2;--danger-line:#FBC9C4;
+  --ink:#0B0B12;--ink-2:#15151F;--ink-line:rgb(255 255 255 / 9%);--ink-text:#B9B9C8;
+  --code-bg:#11111B;--code-head:#181824;--code-border:#262634;--code-text:#E8E8F2;--code-dim:#9294AB;--code-ln:#5D5F78;
+  --k:#C4B5FD;--s:#86EFAC;--n:#FDBA74;--f:#7DD3FC;--c:#8D90A8;
+  --r-sm:6px;--r:8px;--r-lg:12px;--r-xl:16px;
+  --sh-xs:0 1px 2px rgb(16 16 30 / 6%);
+  --sh-sm:0 1px 2px rgb(16 16 30 / 5%),0 2px 8px rgb(16 16 30 / 5%);
+  --sh-md:0 2px 4px rgb(16 16 30 / 4%),0 10px 28px rgb(16 16 30 / 9%);
+  --sh-lg:0 4px 10px rgb(16 16 30 / 6%),0 32px 72px -16px rgb(16 16 30 / 28%);
+  --ring:0 0 0 3px rgb(79 70 229 / 25%);
+  --ease:cubic-bezier(.2,.8,.2,1);--dur:160ms;
+  --font:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}

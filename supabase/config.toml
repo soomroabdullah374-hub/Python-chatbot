@@ -1,0 +1,41 @@
+# Local development stack (`supabase start`). Hosted settings are applied in the dashboard;
+# see DEPLOYMENT.md. Identity is a silent anonymous session — no email or OAuth sign-in.
+project_id = "codebloom"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = []
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+# Sign-ups must stay enabled for anonymous sessions; every credential-based provider is off.
+enable_signup = true
+enable_anonymous_sign_ins = true
+
+[auth.email]
+enable_signup = false
+enable_confirmations = false
+
+[auth.sms]
+enable_signup = false
+
+# Each function verifies the caller's JWT itself (see docs/DECISIONS.md).
+[functions.chat]
+verify_jwt = false
+
+[functions.data-delete]
+verify_jwt = false
+
+[functions.ingest-content]
+verify_jwt = false

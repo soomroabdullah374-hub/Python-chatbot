@@ -1,0 +1,173 @@
+/* CodeBloom app layer: shell layout, responsive behaviour and rendered-answer styles.
+   Values come from the design tokens in cb.css; no new colours are introduced here. */
+
+:root {
+  --font: var(--font-geist-sans), 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: var(--font-geist-mono), 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --side-w: 264px;
+  --panel-w: 300px;
+  --topbar-h: 56px;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { min-height: 100vh; font-family: var(--font); }
+button { font-family: inherit; }
+code, pre, kbd { font-family: var(--mono); }
+
+/* In-app "Reduce motion" switch mirrors prefers-reduced-motion (Design.md "Motion"). */
+html[data-reduce-motion='true'] *,
+html[data-reduce-motion='true'] *::before,
+html[data-reduce-motion='true'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+.skip-link {
+  position: absolute; left: 12px; top: -48px; z-index: 50;
+  padding: 8px 12px; border-radius: var(--r); background: var(--text); color: #fff; font-size: 14px;
+  transition: top var(--dur) var(--ease);
+}
+.skip-link:focus { top: 12px; color: #fff; }
+
+/* ---------- Workspace shell ---------- */
+.ws { min-height: 100vh; display: flex; background: var(--bg); }
+.ws .side {
+  flex: 0 0 var(--side-w); width: var(--side-w);
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.ws.side-collapsed .side { display: none; }
+.ws .main { flex: 1 1 auto; min-width: 0; }
+.ws .topbar { position: sticky; top: 0; z-index: 6; backdrop-filter: saturate(1.4) blur(8px); -webkit-backdrop-filter: saturate(1.4) blur(8px); }
+.ws .content { flex: 1 1 auto; display: flex; flex-wrap: nowrap; align-items: stretch; }
+.ws .thread { flex: 1 1 auto; min-width: 0; }
+.ws .panel {
+  flex: 0 0 var(--panel-w); width: var(--panel-w);
+  position: sticky; top: var(--topbar-h); align-self: flex-start;
+  max-height: calc(100vh - var(--topbar-h)); overflow-y: auto;
+  min-height: calc(100vh - var(--topbar-h));
+}
+.side-search .input { border-color: var(--border-strong); }
+
+.composer-dock { position: sticky; bottom: 0; z-index: 4; padding-top: 12px; padding-bottom: 16px;
+  background: linear-gradient(to bottom, rgb(250 250 249 / 0%), var(--bg) 22px); }
+.composer textarea { max-height: 40vh; overflow-y: auto; }
+
+.mobile-bar { display: none; }
+.mobile-modes { display: none; }
+.only-mobile { display: none; }
+
+@media (max-width: 1199px) {
+  .ws .panel.panel-auto { display: none; }
+}
+@media (max-width: 1199px) {
+  .ws .panel.panel-open {
+    position: fixed; top: var(--topbar-h); right: 0; bottom: 0; z-index: 12; max-height: none;
+    box-shadow: var(--sh-lg);
+  }
+}
+@media (min-width: 1200px) {
+  .terms-inline { display: none; }
+}
+
+@media (max-width: 899px) {
+  .ws .side { display: none; }
+  .desktop-only { display: none !important; }
+  .only-mobile { display: initial; }
+  .mobile-bar {
+    position: sticky; top: 0; z-index: 8; display: flex; align-items: center; gap: 6px;
+    min-height: 56px; padding: 0 6px; background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  .mobile-bar h1 { flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mobile-modes { display: block; padding: 8px 12px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .ws .topbar { display: none; }
+  .ws .thread { padding: 20px 16px 0; }
+  .composer-dock { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .msg-user { max-width: 92%; }
+  .msg-user.has-code { max-width: 100%; }
+  .chip { min-height: 40px; }
+}
+
+/* ---------- Drawer + dialogs + toasts ---------- */
+.scrim { position: fixed; inset: 0; z-index: 30; background: rgb(11 11 18 / 50%); }
+.drawer {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 31; width: min(316px, 86vw);
+  background: var(--subtle); border-right: 1px solid var(--border); box-shadow: 12px 0 40px rgb(11 11 18 / 22%);
+  padding: 0 10px 14px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;
+}
+.dialog-wrap { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgb(11 11 18 / 45%); }
+.toast-stack { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 60; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
+.toast-stack .toast { pointer-events: auto; }
+.toast button.toast-action { margin-left: 6px; padding: 4px 8px; border: 0; border-radius: 6px; background: rgb(255 255 255 / 12%); color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 180px; padding: 6px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--sh-md);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.menu button { display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent; color: var(--text); font-size: 14px; text-align: left; cursor: pointer; }
+.menu button:hover, .menu button:focus-visible { background: var(--subtle); }
+.menu button.danger { color: var(--danger-text); }
+
+/* ---------- Rendered answers (safe Markdown) ---------- */
+.md > * + * { margin-top: 10px; }
+.md p { margin: 0; }
+.md ul, .md ol { margin: 0; padding-left: 1.3em; }
+.md ul { list-style: disc; }
+.md ol { list-style: decimal; }
+.md li + li { margin-top: 4px; }
+.md li::marker { color: var(--text-3); }
+.md strong { font-weight: 600; color: var(--text); }
+.md h3 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.md h4 { font-size: 15px; font-weight: 600; }
+.md blockquote { margin: 0; padding: 4px 0 4px 14px; border-left: 3px solid var(--border-strong); color: var(--text-2); }
+.md table { border-collapse: collapse; font-size: 14px; display: block; overflow-x: auto; max-width: 100%; }
+.md th, .md td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+.md th { background: var(--subtle); font-weight: 600; }
+.md hr { border: 0; height: 1px; background: var(--border); }
+.md a { word-break: break-word; }
+.md .cite { font-size: 11px; font-weight: 600; text-decoration: none; margin-left: 1px; }
+.md .cite-wrap { line-height: 0; }
+.answer-lead.md p, .answer-lead > p { font-size: 17px; line-height: 1.65; }
+.prose.md { font-size: 15.5px; line-height: 1.75; color: #26262E; }
+.code-rows .row > span:last-child { min-width: 0; }
+.code { max-width: 100%; }
+.code .tok-k { color: var(--k); } .code .tok-s { color: var(--s); } .code .tok-n { color: var(--n); }
+.code .tok-f { color: var(--f); } .code .tok-c { color: var(--c); font-style: italic; }
+
+.line-list { margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; font-size: 15px; }
+.line-list li { display: flex; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+.line-list li:last-child { border-bottom: 0; }
+.err-line { font-family: var(--mono); font-size: 13px; color: var(--danger-text); white-space: pre-wrap; word-break: break-word; }
+
+.sr-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Pages ---------- */
+.page-main { flex: 1 1 auto; padding: 48px 44px 80px; }
+@media (max-width: 899px) { .page-main { padding: 28px 16px 64px; } }
+.settings-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 18px 20px; border-bottom: 1px solid var(--border); }
+.settings-row:last-child { border-bottom: 0; }
+.select { appearance: auto; }
+
+@media (max-width: 720px) {
+  .hero .display { font-size: 44px; }
+  .window-sidebar, .window-panel { display: none !important; }
+}
+
+/* Panel toggle: only needed when the learning panel is not shown inline (<1200px). */
+.panel-toggle-auto { display: inline-flex; }
+@media (min-width: 1200px) { .panel-toggle-auto { display: none; } }
+
+/* Markdown inside the "Common mistake" note and the check/question row. */
+.note-md { font-size: 15px; line-height: 1.7; color: #4A3410; }
+.note-md code.ic { background: rgb(255 255 255 / 55%); }
+.check-md { flex: 1 1 auto; min-width: 0; font-size: 15px; line-height: 1.6; }
+.check-md p { margin: 0; }
+.msg-anchor { scroll-margin-top: calc(var(--topbar-h) + 16px); }
+
+/* Landing at phone width: keep the header to brand + CTA and stack the privacy cards. */
+@media (max-width: 720px) {
+  .landing-nav, .window-seg { display: none !important; }
+  .window-thread { padding: 20px 18px !important; }
+  .privacy-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}

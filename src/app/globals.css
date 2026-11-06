@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "../styles/cb.css";
+@import "../styles/app.css";
+
+/* Tailwind v4 theme mapped to the design tokens (design/README.md "Tailwind v4 mapping"). */
+@theme inline {
+  --color-bg: var(--bg);              --color-surface: var(--surface);
+  --color-subtle: var(--subtle);      --color-sunken: var(--sunken);
+  --color-border: var(--border);      --color-border-strong: var(--border-strong);
+  --color-control: var(--control);
+  --color-text: var(--text);          --color-text-2: var(--text-2);   --color-text-3: var(--text-3);
+  --color-primary: var(--primary);    --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft); --color-primary-text: var(--primary-text);
+  --color-accent: var(--accent);
+  --color-explain: var(--explain);    --color-debug: var(--debug);     --color-practice: var(--practice);
+  --color-success: var(--success);    --color-warning: var(--warning); --color-danger: var(--danger);
+  --color-ink: var(--ink);            --color-code: var(--code-bg);    --color-code-head: var(--code-head);
+  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  --shadow-xs: var(--sh-xs); --shadow-sm: var(--sh-sm); --shadow-md: var(--sh-md); --shadow-lg: var(--sh-lg);
+  --font-sans: var(--font-geist-sans), var(--font);
+  --font-mono: var(--font-geist-mono), var(--mono);
+  --ease-out-cb: cubic-bezier(.2,.8,.2,1);
+}
