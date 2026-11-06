@@ -21,4 +21,3 @@ supabase/.branches/
 .vercel/
 next-env.d.ts
 supabase/functions/.dist/
-supabase/tests/.generated/

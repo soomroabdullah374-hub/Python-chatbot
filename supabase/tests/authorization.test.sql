@@ -50,9 +50,9 @@ set local request.jwt.claims = '{"sub":"11111111-1111-4111-8111-111111111111","r
 select is((select count(*)::int from public.conversations), 1, 'learner sees only their own conversations');
 select is((select count(*)::int from public.messages), 2, 'learner sees only their own messages');
 select is((select count(*)::int from public.message_sources), 1, 'learner sees sources of their own answers');
-select is((select count(*)::int from public.documents), 1, 'unpublished documents are hidden from learners');
-select is((select count(*)::int from public.document_chunks), 1, 'chunks of unpublished documents are hidden');
-select is((select count(*)::int from public.match_document_chunks(array_fill(0.05::real, array[384])::extensions.vector, 5, 0.1, null, 'gte-small-384-v1')), 1, 'retrieval RPC returns published chunks only');
+select is((select count(*)::int from public.documents where slug in ('test-published', 'test-draft')), 1, 'unpublished documents are hidden from learners');
+select is((select count(*)::int from public.document_chunks where document_id in ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb')), 1, 'chunks of unpublished documents are hidden');
+select is((select count(*)::int from public.match_document_chunks(array_fill(0.05::real, array[384])::extensions.vector, 5, 0.1, null, 'gte-small-384-v1') where document_id in ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb')), 1, 'retrieval RPC returns published chunks only (the identical draft chunk is excluded)');
 select is((select count(*)::int from public.generation_requests), 1, 'learner reads own turn status');
 select throws_ok($q$select ip_bucket from public.generation_requests$q$, '42501', null, 'learner cannot read hashed IP buckets');
 select throws_ok($q$insert into public.messages (user_id, conversation_id, generation_request_id, role, content, status, mode, language) select user_id, conversation_id, generation_request_id, 'assistant', 'forged', 'completed', mode, language from public.messages limit 1$q$, '42501', null, 'learner cannot insert assistant messages');
