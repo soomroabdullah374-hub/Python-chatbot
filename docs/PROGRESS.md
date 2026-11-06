@@ -52,8 +52,10 @@ chat column was 12px narrower than the design; three pgTAP assertions assumed an
    (Settings → Applications → Vercel → Repository access), then run `vercel git connect` or link the repo
    under Project → Settings → Git. Until then, redeploy with `vercel deploy --prod`.
    **Revoke the Vercel token that was pasted in chat** once this is set up.
-3. **Live chat smoke test** (TESTING.md "Live smoke") on https://codebloom-lac.vercel.app: not run,
-   because no session can be created until item 1 is done. Needs no paid call beyond one short Groq request.
+3. **Live chat smoke test** (TESTING.md "Live smoke"): `npm run smoke:live` (`tests/live/smoke.mjs`) runs
+   landing → onboarding → one short real question → reload → second-browser isolation → delete my data
+   against https://codebloom-lac.vercel.app. Current result: stops at step 1 with
+   `no anonymous session: POST /auth/v1/signup → 422` until item 1 is done.
 4. **Rotate the Groq key.** It was pasted into a chat. After rotating, update Vault:
    `select vault.update_secret((select id from vault.secrets where name = 'groq_api_key'), '<new key>');`
 5. **Placeholders still visible by design:** `[PROVIDER & BACKUP RETENTION — confirm before launch]`,

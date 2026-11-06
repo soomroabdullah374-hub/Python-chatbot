@@ -18,7 +18,8 @@
     "functions:bundle": "node scripts/bundle-functions.mjs",
     "content:build": "node scripts/build-corpus.mjs",
     "db:tests:build": "node scripts/build-db-tests.mjs",
-    "check:bundle-secrets": "node scripts/check-client-bundle.mjs"
+    "check:bundle-secrets": "node scripts/check-client-bundle.mjs",
+    "smoke:live": "node tests/live/smoke.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",
