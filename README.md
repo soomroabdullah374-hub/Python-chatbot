@@ -31,7 +31,7 @@ Built end to end and tested; see [docs/PROGRESS.md](docs/PROGRESS.md) for every 
 - **Backend (live):** Supabase project `codebloom` (`https://vxwexuiimetzkdpaakzv.supabase.co`): 8 migrations,
   RLS on every table, pg_cron maintenance, Edge Functions `chat`, `data-delete` and `ingest-content`, and
   21 published lessons (52 embedded chunks).
-- **Frontend:** this Next.js app. It's ready to import on Vercel with no settings; see "Deploy to Vercel".
+- **Frontend (live):** https://codebloom-lac.vercel.app (Vercel project `codebloom`).
 - **Before learners can use it:** turn on *Anonymous Sign-ins* in the Supabase dashboard
   (Authentication → Sign In / Providers).
 
@@ -55,16 +55,17 @@ The pgTAP suite runs with `supabase test db` locally. Against a hosted project, 
 into the SQL editor: it finishes by raising its TAP output, which rolls every fixture back.
 
 ## Deploy to Vercel
-1. On vercel.com, choose **Add New → Project** and import `soomroabdullah374-hub/Python-chatbot`. If the
-   repo isn't listed, give the Vercel GitHub app access to it.
-2. Keep the defaults (framework Next.js, root `./`) and click **Deploy**. No environment variables are
-   needed: `.env.production` carries the public Supabase URL and publishable key, and Vercel variables
-   override it if set.
-3. If the production URL isn't `https://python-chatbot-soomroabdullah374-8901s-projects.vercel.app` (or
-   `codebloom-…`), allow it for the Edge Functions (the functions pick it up within 60 s):
-   ```sql
-   update private.app_config set allowed_origins = array_append(allowed_origins, 'https://<your-domain>');
-   ```
+Production runs on the Vercel project `codebloom`. No environment variables are needed:
+`.env.production` carries the public Supabase URL and publishable key, and Vercel variables override it
+if set.
+
+- **Redeploy from a checkout:** `npx vercel@65.12.1 deploy --prod` (after `vercel link` to `codebloom`).
+- **Deploy on every push:** give the Vercel GitHub app access to this repo, then link it under
+  Project → Settings → Git (or run `vercel git connect`).
+- **A new domain** needs allowing for the Edge Functions (picked up within 60 s):
+  ```sql
+  update private.app_config set allowed_origins = array_append(allowed_origins, 'https://<your-domain>');
+  ```
 
 ## Repository layout
 | Path | What it is |

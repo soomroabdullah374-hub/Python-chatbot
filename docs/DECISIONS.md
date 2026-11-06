@@ -79,11 +79,18 @@ browser bundle anyway. Committing them means a fresh Vercel import builds with n
 environment variables still override them. No secret is ever placed in a `NEXT_PUBLIC_` variable, and
 `npm run check:bundle-secrets` fails the check if one appears in the build output.
 
-## D11 · Not deployed to Vercel from this session
-The Vercel connection available here can read the account but gets `403 forbidden` on project creation and
-deployments (with or without Git). The user chose not to share a Vercel token for the CLI. The repository
-is import-ready instead (README "Deploy to Vercel"), and the Edge Functions already allow the
-`python-chatbot-` / `codebloom-soomroabdullah374-8901s-projects.vercel.app` origins.
+## D11 · Vercel deployment via the CLI, not Git
+- **Built:** project `codebloom` (team `soomroabdullah374-8901s-projects`, Node 22.x), deployed with
+  `vercel deploy --prod` using the user's token. Production URL https://codebloom-lac.vercel.app
+  (`codebloom.vercel.app` was taken), plus `codebloom-soomroabdullah374-8901s-projects.vercel.app`.
+  Both are in `allowed_origins`; `localhost:3000` stays for development.
+- **Not Git-linked:** the Vercel GitHub app has no access to this repo (`install the GitHub integration
+  first`), so pushes don't deploy automatically yet (PROGRESS open item 2). The Vercel connector used
+  earlier in this session could not create projects at all (`403`).
+- **Deployment protection:** the team default ("all except custom domains") would have put a Vercel
+  login in front of learners. The project uses Standard protection instead: production domains are public,
+  previews and per-deployment URLs need a Vercel login.
+- `.vercelignore` keeps tests, design references, content sources and local build output out of the upload.
 
 ## D12 · Retention values
 - Inactivity retention: **90 days** (user decision), enforced by `codebloom-purge-inactive`.

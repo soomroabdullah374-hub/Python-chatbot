@@ -1,0 +1,14 @@
+# Upload only what `next build` needs (Vercel builds remotely).
+.next
+.next-e2e
+node_modules
+test-results
+playwright-report
+supabase/functions/.dist
+supabase/migrations
+supabase/tests
+design
+docs
+content
+tests
+scripts

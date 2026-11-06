@@ -14,7 +14,7 @@ are in docs/DECISIONS.md.
 | Runtime config | `private.app_config`: `allowed_origins`, `generation_enabled` (kill switch), per-learner, per-IP and global limits, `global_daily_budget_usd`, `anon_retention_days` = 90, `model_prices` |
 | Scheduled jobs | pg_cron: `codebloom-reconcile-turns` (every minute), `codebloom-purge-inactive` (03:17 UTC), `codebloom-purge-usage` (03:29 UTC) |
 | Content | `npm run content:build` → `content/corpus.json`; ingest + embed with the operator-only `ingest-content` (`embed_pending` in batches of 4) |
-| Frontend | Vercel import of this repo with no settings needed (`.env.production` holds the public values). Add the production origin to `allowed_origins` if it differs from the pre-allowed `python-chatbot-` / `codebloom-soomroabdullah374-8901s-projects.vercel.app` |
+| Frontend | Vercel project `codebloom` → https://codebloom-lac.vercel.app (CLI deploys; not Git-linked yet). No env settings needed (`.env.production` holds the public values). Standard deployment protection, so production domains are public. Add any new domain to `allowed_origins` |
 
 Rotate the Groq key: `select vault.update_secret((select id from vault.secrets where name = 'groq_api_key'), '<new key>');`
 Pause generation: `update private.app_config set generation_enabled = false;`

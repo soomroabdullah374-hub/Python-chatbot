@@ -15,7 +15,7 @@ Hosted backend: Supabase project `codebloom` (ref `vxwexuiimetzkdpaakzv`, Postgr
 | 4 Frontend: landing, onboarding, chat, saved, settings | ✅ Done — matches `design/`; axe clean at 1440 and 390 |
 | 5 Content: approved corpus, embeddings, retrieval eval | ✅ Done — 21 lessons / 52 chunks published; recall@1 21/21 |
 | 6 Testing: unit, DB, e2e, a11y, visual | ✅ Done (live chat smoke blocked, see Open items) |
-| 7 Release: Vercel deploy, live smoke | ⏳ Blocked on two dashboard steps (see Open items) |
+| 7 Release: Vercel deploy, live smoke | 🟡 Deployed to **https://codebloom-lac.vercel.app**; live chat waits on Anonymous Sign-ins (Open item 1) |
 
 ## Verification log (2026-11-06, commit `056dbf8` + docs)
 
@@ -33,6 +33,7 @@ Hosted backend: Supabase project `codebloom` (ref `vxwexuiimetzkdpaakzv`, Postgr
 | Retrieval eval | `ingest-content` `search` action (docs/evals/retrieval-2026-11-05.md) | recall@1 21/21; on-topic ≥ 0.859, off-topic ≤ 0.733; threshold 0.80 |
 | Live function checks | `curl` against `https://vxwexuiimetzkdpaakzv.supabase.co/functions/v1/*` | preflight from the Vercel origin → `204` with `access-control-allow-origin`; unknown origin → `403`; `POST /chat` and `POST /data-delete` without a session → `SESSION_REQUIRED` envelope; anon `GET /rest/v1/conversations` → `42501 permission denied` |
 | Deployed code = source | `get_edge_function chat` vs `npm run functions:bundle` | chat v1 matches the current bundle (it lacks only the operator-only ingest `search` schema, which chat doesn't use); ingest-content v2 includes `search`; data-delete v1 unchanged since deploy |
+| Vercel production | `vercel deploy --prod` (CLI 65.12.1, project `codebloom`, Node 22.x) | READY at https://codebloom-lac.vercel.app (also `codebloom-soomroabdullah374-8901s-projects.vercel.app`). Public: `/`, `/onboarding`, `/chat`, `/saved`, `/settings` → 200; `/login`, `/signup`, `/auth/callback`, unknown → 404; CSP + `X-Frame-Options: DENY` + `nosniff` + referrer/permissions policies present; `/chat` is `no-store`. In Chromium the landing renders and `/chat` calls Supabase, gets `422 anonymous_provider_disabled`, and shows the reconnect banner (expected until Open item 1). CORS preflight from the production origin → 204 |
 | Security advisors | Supabase advisors (security) | INFO ×4: RLS without policies on `private.*` service tables (intended deny-all). WARN ×9: learner RPCs are `SECURITY DEFINER` (intended, see DECISIONS D3). No other findings |
 
 Fixes made because of these checks: code blocks lost their "Copied" state on any re-render (Markdown
@@ -46,12 +47,13 @@ chat column was 12px narrower than the design; three pgTAP assertions assumed an
    sign-ins"). Until then the app opens to "We couldn't restore your private session": `POST /auth/v1/signup`
    returns `422 anonymous_provider_disabled`. Recommended while there: turn off the Email provider
    (there is no email login).
-2. **Import the repo on Vercel.** The Vercel connection in this session gets `403` on project creation and
-   the user chose not to share a token (DECISIONS D11). Steps are in README → "Deploy to Vercel". If the
-   project gets a domain other than `python-chatbot-` / `codebloom-soomroabdullah374-8901s-projects.vercel.app`,
-   add it to `private.app_config.allowed_origins`.
-3. **Live chat smoke test** (TESTING.md "Live smoke"): not run, because no session can be created until
-   item 1 is done. Needs no paid call beyond one short Groq request.
+2. **Automatic deploys from GitHub.** The Vercel project isn't linked to the repo, because the Vercel
+   GitHub app can't see `Python-chatbot` (DECISIONS D11). Give it access on GitHub
+   (Settings → Applications → Vercel → Repository access), then run `vercel git connect` or link the repo
+   under Project → Settings → Git. Until then, redeploy with `vercel deploy --prod`.
+   **Revoke the Vercel token that was pasted in chat** once this is set up.
+3. **Live chat smoke test** (TESTING.md "Live smoke") on https://codebloom-lac.vercel.app: not run,
+   because no session can be created until item 1 is done. Needs no paid call beyond one short Groq request.
 4. **Rotate the Groq key.** It was pasted into a chat. After rotating, update Vault:
    `select vault.update_secret((select id from vault.secrets where name = 'groq_api_key'), '<new key>');`
 5. **Placeholders still visible by design:** `[PROVIDER & BACKUP RETENTION — confirm before launch]`,
@@ -69,7 +71,7 @@ this table is the evidence record.
 
 | Criterion | Status | Evidence / gap |
 |---|---|---|
-| First visit reaches a streamed answer with no sign-up/login | Partial | E2E journeys 1–3 (fake backend, no login screen at any step). Live: Blocked on Anonymous Sign-ins |
+| First visit reaches a streamed answer with no sign-up/login | Partial | E2E journeys 1–3 (fake backend, no login screen at any step). Live site deployed; Blocked on Anonymous Sign-ins |
 | Answers the actual question | Partial | Prompt contract and adapter tests; a live Groq stream was recorded during the build. Needs the live smoke + tutor eval |
 | Explain / Debug / Practice behave differently | Met | E2E journey 3 + screenshots: section layouts, "Not executed" label, progressive hints, hidden solution |
 | Never claims code execution | Partial | System prompt rule 8; "Not executed" badges. Tutor eval not run |
