@@ -21,6 +21,6 @@
       "@shared/*": ["./supabase/functions/_shared/*"]
     }
   },
-  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", ".next-e2e/types/**/*.ts", ".next-e2e/dev/types/**/*.ts"],
   "exclude": ["node_modules", "supabase/functions/**/index.ts", "supabase/functions/_shared/server.ts", "supabase/functions/.dist"]
 }

@@ -298,7 +298,9 @@ export default function SettingsPage() {
                         <span className="muted">
                           A workspace with no activity for {env.retentionDays} days is deleted automatically, with everything in it. Deleting doesn&apos;t instantly purge backups.
                         </span>
-                        <span className="badge mono badge-debug">[PROVIDER &amp; BACKUP RETENTION — confirm before launch]</span>
+                        <span className="badge mono badge-debug" style={{ height: 'auto', minHeight: 22, padding: '2px 8px', whiteSpace: 'normal', lineHeight: 1.5, maxWidth: '100%' }}>
+                          [PROVIDER &amp; BACKUP RETENTION — confirm before launch]
+                        </span>
                       </dd>
                     </div>
                   </dl>

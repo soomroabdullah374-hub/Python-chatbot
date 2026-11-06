@@ -260,7 +260,6 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
     return splitSections(prepareCitations(message.content, allowed));
   }, [message.content, streaming, liveSources, valid]);
   const highlight = useMemo(() => flaggedLines(sections), [sections]);
-  const citeHref = (n: string) => `#${citeBase}-src-${n}`;
 
   const exercise = sections.find((s) => s.kind === 'exercise');
   const feedback = sections.find((s) => s.kind === 'feedback');
@@ -283,7 +282,12 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
   const banner = !streaming ? bannerFor(message.status, message.errorCode) : null;
   const completed = message.status === 'completed' && !streaming;
 
-  const renderSection = (s: Section, i: number) => {
+  // In a practice feedback turn the understanding check is about the solution, so it waits until
+  // the learner has revealed it (or there is no solution to reveal).
+  const checkSec = sections.find((s) => s.kind === 'check');
+  const deferCheck = Boolean(hintsSec || solutionSec) && Boolean(checkSec);
+  const renderSection = (s: Section, i: number, force = false) => {
+    if (deferCheck && !force && s.kind === 'check') return null;
     const body = withCaret(s, i);
     const key = `${s.kind}-${i}`;
     const d = `d${Math.min(i + 2, 8)}`;
@@ -292,7 +296,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
         return (
           <section key={key} className={`sec rise ${d}`}>
             {s.heading && <Label>{s.heading}</Label>}
-            <Markdown className="answer-lead" citeHref={citeHref}>
+            <Markdown className="answer-lead" citePrefix={citeBase}>
               {body}
             </Markdown>
           </section>
@@ -301,11 +305,11 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
         const [first, ...rest] = body.split(/\n\s*\n/);
         return (
           <section key={key} className={`sec rise ${d}`} style={{ gap: 14 }}>
-            <Markdown className="answer-lead" citeHref={citeHref}>
+            <Markdown className="answer-lead" citePrefix={citeBase}>
               {first}
             </Markdown>
             {rest.length > 0 && (
-              <Markdown className="prose" citeHref={citeHref}>
+              <Markdown className="prose" citePrefix={citeBase}>
                 {rest.join('\n\n')}
               </Markdown>
             )}
@@ -317,7 +321,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
         return (
           <section key={key} className={`sec rise ${d}`}>
             {s.heading && <Label>{s.heading}</Label>}
-            <Markdown className="prose" highlight={s.kind === 'example' ? highlight : []} citeHref={citeHref}>
+            <Markdown className="prose" highlight={s.kind === 'example' ? highlight : []} citePrefix={citeBase}>
               {body}
             </Markdown>
           </section>
@@ -335,7 +339,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
             <Icon name="warning" size={18} color="#B45309" style={{ flex: 'none', marginTop: 3 }} />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               <h2 style={{ fontSize: 14, fontWeight: 600, color: 'var(--warning-text)' }}>{s.heading}</h2>
-              <Markdown className="note-md" citeHref={citeHref}>
+              <Markdown className="note-md" citePrefix={citeBase}>
                 {body}
               </Markdown>
             </div>
@@ -350,7 +354,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
               <span className="badge mono badge-explain" style={{ flex: 'none' }}>
                 {s.kind === 'check' ? 'CHECK' : 'QUESTION'}
               </span>
-              <Markdown className="check-md" citeHref={citeHref}>
+              <Markdown className="check-md" citePrefix={citeBase}>
                 {body}
               </Markdown>
             </div>
@@ -385,7 +389,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
         return (
           <section key={key} className={`sec rise ${d}`}>
             {s.heading && <Label>{s.heading}</Label>}
-            <Markdown className="prose" citeHref={citeHref}>
+            <Markdown className="prose" citePrefix={citeBase}>
               {body}
             </Markdown>
           </section>
@@ -451,7 +455,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
 
       <article id={exercise ? undefined : anchorId} className="msg-ai msg-anchor" aria-label="CodeBloom answer" aria-busy={streaming}>
         {head}
-        {sections.map(renderSection)}
+        {sections.map((s, i) => renderSection(s, i))}
 
         {hints.length > 0 && (completed || !streaming) && (
           <HintsCard
@@ -471,6 +475,7 @@ export const AssistantMessage = memo(function AssistantMessage(props: AssistantM
             {solution.after && <Markdown className="prose">{solution.after}</Markdown>}
           </section>
         )}
+        {deferCheck && checkSec && (props.solutionShown || !solution?.fence) && renderSection(checkSec, sections.indexOf(checkSec), true)}
         {solution?.fence && !hints.length && !props.solutionShown && completed && (
           <div>
             <button type="button" className="btn btn-secondary btn-sm" onClick={props.onSolution}>

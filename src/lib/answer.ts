@@ -139,6 +139,12 @@ export function extractFirstFence(body: string): { before: string; fence: Fenced
   };
 }
 
+/** The line a Debug answer's "Minimal fix" targets (`diff python line=3`), to mark in the learner's code. */
+export function fixLine(md: string): number | null {
+  const fix = splitSections(md).find((s) => s.kind === 'fix');
+  return fix ? (extractFirstFence(fix.body).fence?.info.line ?? null) : null;
+}
+
 export interface LineNote {
   line: number | null;
   label: string;
@@ -211,7 +217,8 @@ export function flaggedLines(sections: Section[]): number[] {
   return notes?.filter((n) => n.flagged && n.line).map((n) => n.line as number) ?? [];
 }
 
-const CITE = /\[S([1-9][0-9]?)\]/g;
+// The space before a label goes too: citations sit flush against the text they support.
+const CITE = /[ \t]*\[S([1-9][0-9]?)\]/g;
 
 /** [S1] → a link the renderer turns into a superscript; unknown labels are removed (RAG.md). */
 export function prepareCitations(md: string, valid: ReadonlySet<string>): string {
@@ -284,7 +291,7 @@ export function excerpt(md: string, max = 140): string {
   const lead = sections.find((s) => s.kind === 'lead' || s.kind === 'feedback') ?? sections[0];
   const text = (lead?.body ?? md)
     .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/\[S\d+\]/g, '')
+    .replace(/\s*\[S\d+\]/g, '')
     .replace(/[*_`#>]/g, '')
     .replace(/\s+/g, ' ')
     .trim();

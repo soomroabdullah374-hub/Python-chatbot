@@ -89,7 +89,8 @@ export const CodeBlock = memo(function CodeBlock({
           )}
         </div>
       )}
-      <div className="code-rows" role="group" aria-label={`${lang || 'code'} code`}>
+      {/* Focusable so keyboard users can scroll long lines (WCAG 2.1.1). */}
+      <div className="code-rows" role="group" aria-label={`${lang || 'code'} code`} tabIndex={0}>
         {lines.map((toks, i) => {
           const kind = rows?.[i]?.kind;
           const cls = kind === 'add' ? ' add' : kind === 'del' ? ' del' : highlight.includes(i + 1) ? ' hl' : '';

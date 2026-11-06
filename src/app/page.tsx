@@ -60,7 +60,7 @@ const ANATOMY: Array<{ n: number; label: string; body: ReactNode }> = [
     label: 'Example',
     body: (
       <div className="code">
-        <pre>
+        <pre tabIndex={0} aria-label="Python example">
           <code>
             fruits = [<span className="s">&quot;apple&quot;</span>, <span className="s">&quot;pear&quot;</span>]{'\n'}fruits.<span className="f">append</span>(<span className="s">&quot;fig&quot;</span>){'\n'}
             <span className="f">print</span>(fruits){'  '}<span className="c"># [&apos;apple&apos;, &apos;pear&apos;, &apos;fig&apos;]</span>
@@ -253,7 +253,7 @@ export default function LandingPage() {
                       <span>javascript</span>
                       <span className="code-copy">Copy</span>
                     </div>
-                    <pre>
+                    <pre tabIndex={0} aria-label="JavaScript example">
                       <code>
                         <span className="k">const</span> name = <span className="s">&quot;Sara&quot;</span>;{'\n'}
                         <span className="k">let</span> score = <span className="n">0</span>;{'\n'}

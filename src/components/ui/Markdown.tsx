@@ -1,7 +1,7 @@
 'use client';
 // Safe Markdown (SECURITY.md "Rendering"): no raw HTML (react-markdown escapes it), no remote
 // images, links only to https documentation hosts, citations only for validated labels.
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { safeSourceUrl } from '@shared/citations.ts';
@@ -58,20 +58,31 @@ function makeComponents(highlight: number[], citeHref: (n: string) => string): C
   };
 }
 
+const REMARK = [remarkGfm];
+const REHYPE = [rehypeCaret];
+
 export const Markdown = memo(function Markdown({
   children,
   className = '',
-  highlight = [],
-  citeHref = (n: string) => `#src-${n}`,
+  highlight,
+  citePrefix,
 }: {
   children: string;
   className?: string;
   highlight?: number[];
-  citeHref?: (n: string) => string;
+  /** Citation links point at `#<citePrefix>-src-<n>` (the answer's Sources list). */
+  citePrefix?: string;
 }) {
+  // Renderer components must keep their identity across renders: a new `pre` component type would
+  // remount every CodeBlock and drop its state (e.g. "Copied"). Key the memo on primitives only.
+  const lines = highlight?.join(',') ?? '';
+  const components = useMemo(
+    () => makeComponents(lines ? lines.split(',').map(Number) : [], (n) => (citePrefix ? `#${citePrefix}-src-${n}` : `#src-${n}`)),
+    [lines, citePrefix],
+  );
   return (
     <div className={`md ${className}`}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeCaret]} components={makeComponents(highlight, citeHref)} skipHtml>
+      <ReactMarkdown remarkPlugins={REMARK} rehypePlugins={REHYPE} components={components} skipHtml>
         {children}
       </ReactMarkdown>
     </div>

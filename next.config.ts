@@ -21,6 +21,8 @@ const csp = [
 ].join('; ');
 
 const nextConfig: NextConfig = {
+  // E2E builds point at the local fake backend, so they get their own output folder.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   poweredByHeader: false,
   reactStrictMode: true,
   async headers() {

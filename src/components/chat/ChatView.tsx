@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LANGUAGES, LANGUAGE_LABELS, LIMITS, MODES, MODE_LABELS } from '@shared/constants.ts';
 import type { ErrorCode } from '@shared/errors.ts';
-import { splitSections } from '@/lib/answer';
+import { fixLine, splitSections } from '@/lib/answer';
 import { streamChat, type TerminalError } from '@/lib/api/chat-stream';
 import {
   addBookmark,
@@ -792,7 +792,7 @@ export function ChatView() {
 
       <div className="content">
         <main className="thread" aria-label="Conversation">
-          <div className="conv" style={panelMode === 'debug' ? { maxWidth: 800 } : undefined}>
+          <div className="conv" style={panelMode === 'debug' ? { maxWidth: 800 } : !hasThread ? { maxWidth: 772 } : undefined}>
             {load === 'loading' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }} aria-busy="true">
                 <div className="skeleton" style={{ height: 44, width: '60%', alignSelf: 'flex-end', borderRadius: 18 }} />
@@ -837,7 +837,12 @@ export function ChatView() {
                 <>
                   {messages.map((m, i) =>
                     m.role === 'user' ? (
-                      <UserMessage key={m.id} content={m.content} language={m.language} />
+                      <UserMessage
+                        key={m.id}
+                        content={m.content}
+                        language={m.language}
+                        markLine={messages[i + 1]?.role === 'assistant' && messages[i + 1].mode === 'debug' ? fixLine(messages[i + 1].content) : null}
+                      />
                     ) : (
                       <AssistantMessage
                         key={m.id}
@@ -861,7 +866,7 @@ export function ChatView() {
                   )}
                   {live && (
                     <>
-                      <UserMessage content={live.message} language={live.language} />
+                      <UserMessage content={live.message} language={live.language} markLine={live.mode === 'debug' ? fixLine(live.text) : null} />
                       <AssistantMessage
                         message={{ id: null, content: live.text, status: 'streaming', mode: live.mode, language: live.language, sources: [], rating: null, bookmarked: false }}
                         live={{ stage: live.stage, sourcesFound: live.sourcesFound }}

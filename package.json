@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit",
     "typecheck:functions": "deno check --config supabase/functions/deno.json supabase/functions/chat/index.ts supabase/functions/data-delete/index.ts supabase/functions/ingest-content/index.ts",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --trace off",
     "functions:bundle": "node scripts/bundle-functions.mjs",
     "content:build": "node scripts/build-corpus.mjs",
     "db:tests:build": "node scripts/build-db-tests.mjs",
@@ -44,5 +44,8 @@
     "tailwindcss": "4.3.4",
     "typescript": "6.0.3",
     "vitest": "5.1.0"
+  },
+  "overrides": {
+    "playwright-core": "1.63.0"
   }
 }

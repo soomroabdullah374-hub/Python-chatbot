@@ -171,3 +171,6 @@ html[data-reduce-motion='true'] *::after {
   .window-thread { padding: 20px 18px !important; }
   .privacy-grid { grid-template-columns: minmax(0, 1fr) !important; }
 }
+
+/* Focusable code regions sit inside .code (overflow: hidden): draw the focus ring inside. */
+.code-rows:focus-visible, .code pre:focus-visible { outline-offset: -2px; border-radius: var(--r-lg); }
